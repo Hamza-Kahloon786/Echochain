@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: #0f1117;
+  color: #e4e4ec;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #1a1a23;
+}
+::-webkit-scrollbar-thumb {
+  background: #3d3d4f;
+  border-radius: 3px;
+}
+
+@layer components {
+  .card {
+    @apply bg-carbon-900/80 border border-carbon-800 rounded-2xl p-6 backdrop-blur-sm;
+  }
+  .card-hover {
+    @apply card transition-all duration-300 hover:border-echo-600/40 hover:shadow-lg hover:shadow-echo-950/20;
+  }
+  .btn-primary {
+    @apply bg-echo-600 hover:bg-echo-500 text-white font-medium px-5 py-2.5 rounded-xl transition-all duration-200 active:scale-[0.97];
+  }
+  .btn-secondary {
+    @apply bg-carbon-800 hover:bg-carbon-700 text-carbon-200 font-medium px-5 py-2.5 rounded-xl border border-carbon-700 transition-all duration-200;
+  }
+  .input-field {
+    @apply w-full bg-carbon-950 border border-carbon-700 rounded-xl px-4 py-2.5 text-carbon-100 placeholder-carbon-500 focus:outline-none focus:border-echo-600 focus:ring-1 focus:ring-echo-600/30 transition-all duration-200;
+  }
+  .select-field {
+    @apply w-full bg-carbon-950 border border-carbon-700 rounded-xl px-4 py-2.5 text-carbon-100 focus:outline-none focus:border-echo-600 transition-all duration-200 appearance-none;
+  }
+  .label {
+    @apply block text-sm font-medium text-carbon-400 mb-1.5;
+  }
+  .stat-value {
+    @apply text-3xl font-bold tracking-tight;
+  }
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-high {
+    @apply badge bg-red-500/15 text-red-400 border border-red-500/20;
+  }
+  .badge-medium {
+    @apply badge bg-amber-500/15 text-amber-400 border border-amber-500/20;
+  }
+  .badge-low {
+    @apply badge bg-echo-500/15 text-echo-400 border border-echo-500/20;
+  }
+}
