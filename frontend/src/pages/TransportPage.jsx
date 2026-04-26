@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { PageLoader, EmptyState } from '../components/SharedComponents';
 import Modal from '../components/Modal';
-import PDFUploader from '../components/PDFUploader';
+import ExcelUploader from '../components/ExcelUploader';
 import { Truck, Plus, Trash2, Edit2, Plane, TrainFront, Ship, Upload } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -98,8 +98,8 @@ export default function TransportPage() {
           <p className="text-sm text-carbon-500 mt-1">Manage logistics routes and track transport emissions</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setShowPdfUpload(!showPdfUpload)} className="btn-secondary flex items-center gap-2">
-            <Upload className="w-4 h-4" /> Import PDF
+          <button onClick={() => setShowPdfUpload(true)} className="btn-secondary flex items-center gap-2">
+            <Upload className="w-4 h-4" /> Import Excel
           </button>
           <button onClick={openNew} className="btn-primary flex items-center gap-2">
             <Plus className="w-4 h-4" /> Add Route
@@ -108,11 +108,7 @@ export default function TransportPage() {
       </div>
 
       {showPdfUpload && (
-        <div className="card border-echo-600/20">
-          <h3 className="text-sm font-semibold text-echo-400 mb-3">Import Routes from PDF</h3>
-          <p className="text-xs text-carbon-500 mb-4">Upload delivery schedules, shipping manifests, or logistics documents. AI will extract origins, destinations, distances, and transport modes.</p>
-          <PDFUploader entityType="transport" onImportComplete={() => { setShowPdfUpload(false); load(); }} />
-        </div>
+        <ExcelUploader entityType="transport" onImportComplete={() => { setShowPdfUpload(false); load(); }} />
       )}
 
       {routes.length === 0 ? (

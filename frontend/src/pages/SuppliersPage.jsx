@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { PageLoader, EmptyState } from '../components/SharedComponents';
 import Modal from '../components/Modal';
-import PDFUploader from '../components/PDFUploader';
+import ExcelUploader from '../components/ExcelUploader';
 import { Factory, Plus, Trash2, Edit2, Flame, Zap, Link2, Upload } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -78,8 +78,8 @@ export default function SuppliersPage() {
           <p className="text-sm text-carbon-500 mt-1">Manage suppliers and view Scope 1, 2, 3 emissions</p>
         </div>
         <div className="flex gap-2">
-          <button onClick={() => setShowPdfUpload(!showPdfUpload)} className="btn-secondary flex items-center gap-2">
-            <Upload className="w-4 h-4" /> Import PDF
+          <button onClick={() => setShowPdfUpload(true)} className="btn-secondary flex items-center gap-2">
+            <Upload className="w-4 h-4" /> Import Excel
           </button>
           <button onClick={openNew} className="btn-primary flex items-center gap-2">
             <Plus className="w-4 h-4" /> Add Supplier
@@ -87,13 +87,8 @@ export default function SuppliersPage() {
         </div>
       </div>
 
-      {/* PDF Upload Section */}
       {showPdfUpload && (
-        <div className="card border-echo-600/20">
-          <h3 className="text-sm font-semibold text-echo-400 mb-3">Import Suppliers from PDF</h3>
-          <p className="text-xs text-carbon-500 mb-4">Upload invoices, supplier lists, or any document containing supplier information. AI will extract names, locations, industries, and estimate emission factors.</p>
-          <PDFUploader entityType="suppliers" onImportComplete={() => { setShowPdfUpload(false); load(); }} />
-        </div>
+        <ExcelUploader entityType="suppliers" onImportComplete={() => { setShowPdfUpload(false); load(); }} />
       )}
 
       {suppliers.length === 0 ? (

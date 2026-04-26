@@ -10,6 +10,9 @@ class UserCreate(BaseModel):
     email: str
     password: str
     company_name: str
+    full_name: str = ""
+    company_phone: str = ""
+    company_address: str = ""
 
 class UserLogin(BaseModel):
     email: str

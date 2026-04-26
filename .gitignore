@@ -1,0 +1,88 @@
+# ══════════════════════════════════════════════════
+#  EchoChain — Root .gitignore
+# ══════════════════════════════════════════════════
+
+# ── Environment / secrets ─────────────────────────
+.env
+.env.*
+!.env.example
+!backend/.env.example
+!frontend/.env.example
+
+# ── Python ────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+*.so
+
+# ── Virtual environments ──────────────────────────
+backend/venv/
+backend/.venv/
+backend/env/
+venv/
+.venv/
+
+# ── Python packaging ──────────────────────────────
+dist/
+build/
+*.egg-info/
+*.egg
+wheels/
+
+# ── Testing / coverage ────────────────────────────
+.pytest_cache/
+.coverage
+htmlcov/
+coverage/
+coverage.xml
+.nyc_output/
+
+# ── Type checking ─────────────────────────────────
+.mypy_cache/
+.dmypy.json
+.pyright/
+
+# ── ML model artifacts ────────────────────────────
+*.pkl
+*.pickle
+*.joblib
+*.h5
+*.pt
+*.pth
+
+# ── Node / Frontend ───────────────────────────────
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+frontend/vite.config.js.timestamp-*
+
+# ── Logs ──────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ── Database ──────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+
+# ── Uploads / generated ───────────────────────────
+uploads/
+generated_reports/
+
+# ── IDE / OS ──────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.cache/
+*.tsbuildinfo
+*.local

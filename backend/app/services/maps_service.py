@@ -273,6 +273,9 @@ async def get_map_data(user_id: str) -> dict:
                 "destination": {"lat": d_lat, "lng": d_lng, "name": doc.get("destination", "")},
                 "mode": doc.get("mode", "road_diesel"),
                 "annual_emissions": doc.get("annual_emissions", 0),
+                "distance_km": doc.get("distance_km", 0),
+                "weight_tonnes": doc.get("weight_tonnes", 1),
+                "trips_per_month": doc.get("trips_per_month", 1),
             }
         return None
 

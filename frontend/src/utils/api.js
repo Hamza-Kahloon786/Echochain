@@ -23,7 +23,7 @@ api.interceptors.response.use(
   (err) => {
     if (err.response?.status === 401) {
       localStorage.removeItem('echochain_token');
-      window.location.href = '/login';
+      window.location.href = '/'; // back to landing page, not hard-coded /login
     }
     return Promise.reject(err);
   }

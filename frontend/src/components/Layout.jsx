@@ -7,15 +7,15 @@ import {
 import { useState } from 'react';
 
 const navItems = [
-  { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
-  { path: '/suppliers', icon: Factory, label: 'Suppliers' },
-  { path: '/warehouses', icon: Warehouse, label: 'Warehouses' },
-  { path: '/transport', icon: Truck, label: 'Transport' },
-  { path: '/hotspot-map', icon: MapPin, label: 'Hotspot Map' },
-  { path: '/forecasting', icon: TrendingUp, label: 'Forecasting' },
-  { path: '/recommendations', icon: Lightbulb, label: 'Recommendations' },
-  { path: '/live-grid', icon: Zap, label: 'Live UK Grid' },
-  { path: '/ai-assistant', icon: Brain, label: 'AI Assistant' },
+  { path: '/app',                  icon: LayoutDashboard, label: 'Dashboard',      end: true },
+  { path: '/app/suppliers',        icon: Factory,         label: 'Suppliers' },
+  { path: '/app/warehouses',       icon: Warehouse,       label: 'Warehouses' },
+  { path: '/app/transport',        icon: Truck,           label: 'Transport' },
+  { path: '/app/hotspot-map',      icon: MapPin,          label: 'Hotspot Map' },
+  { path: '/app/forecasting',      icon: TrendingUp,      label: 'Forecasting' },
+  { path: '/app/recommendations',  icon: Lightbulb,       label: 'Recommendations' },
+  { path: '/app/live-grid',        icon: Zap,             label: 'Live UK Grid' },
+  { path: '/app/ai-assistant',     icon: Brain,           label: 'AI Assistant' },
 ];
 
 export default function Layout() {
@@ -55,11 +55,11 @@ export default function Layout() {
 
         {/* Nav */}
         <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
-          {navItems.map(({ path, icon: Icon, label }) => (
+          {navItems.map(({ path, icon: Icon, label, end }) => (
             <NavLink
               key={path}
               to={path}
-              end={path === '/'}
+              end={end ?? false}
               onClick={() => setSidebarOpen(false)}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 group ${

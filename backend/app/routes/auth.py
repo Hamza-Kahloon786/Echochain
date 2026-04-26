@@ -1,8 +1,9 @@
 """Authentication routes."""
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from bson import ObjectId
 from app.database import get_db
 from app.models.schemas import UserCreate, UserLogin, Token, UserResponse
-from app.utils.auth import hash_password, verify_password, create_access_token
+from app.utils.auth import hash_password, verify_password, create_access_token, get_current_user
 
 router = APIRouter()
 
@@ -18,6 +19,9 @@ async def register(user: UserCreate):
         "email": user.email,
         "password": hash_password(user.password),
         "company_name": user.company_name,
+        "full_name": user.full_name,
+        "company_phone": user.company_phone,
+        "company_address": user.company_address,
     }
     result = await db.users.insert_one(user_doc)
     token = create_access_token({"sub": str(result.inserted_id)})
@@ -36,12 +40,9 @@ async def login(user: UserLogin):
 
 
 @router.get("/me", response_model=UserResponse)
-async def get_me(user_id: str = None):
-    from app.utils.auth import get_current_user
-    from fastapi import Depends
+async def get_me(user_id: str = Depends(get_current_user)):
     db = get_db()
-    from bson import ObjectId
     user = await db.users.find_one({"_id": ObjectId(user_id)})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
-    return {"id": str(user["_id"]), "email": user["email"], "company_name": user["company_name"]}
+    return {"id": str(user["_id"]), "email": user["email"], "company_name": user.get("company_name", "")}
