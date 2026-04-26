@@ -215,10 +215,10 @@ export default function LandingPage() {
 
           {/* Right */}
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/login')} className="hidden lg:block px-4 py-2 text-sm font-medium text-carbon-300 hover:text-white transition-colors duration-200">
+            <button onClick={() => navigate('/login')} className="hidden sm:block px-4 py-2 text-sm font-medium text-carbon-300 hover:text-white transition-colors duration-200">
               Sign In
             </button>
-            <button onClick={() => navigate('/signup')} className="btn-primary text-sm flex items-center gap-1.5">
+            <button onClick={() => navigate('/signup')} className="hidden sm:flex btn-primary text-sm items-center gap-1.5">
               Get Started <ArrowRight className="w-3.5 h-3.5" />
             </button>
             <button onClick={() => setMobileOpen(true)} className="lg:hidden p-2 rounded-lg text-carbon-400 hover:bg-carbon-800 transition-colors" aria-label="Open menu" aria-expanded={mobileOpen}>
@@ -244,9 +244,12 @@ export default function LandingPage() {
             </button>
           ))}
         </nav>
-        <div className="mt-6">
+        <div className="mt-6 flex flex-col items-center gap-3">
           <button onClick={() => { navigate('/signup'); setMobileOpen(false); }} className="btn-primary px-10 py-3.5 text-base flex items-center gap-2">
             Get Started Free <ArrowRight className="w-4 h-4" />
+          </button>
+          <button onClick={() => { navigate('/login'); setMobileOpen(false); }} className="text-sm text-carbon-400 hover:text-white transition-colors py-2">
+            Already have an account? <span className="text-echo-400 font-semibold">Sign In</span>
           </button>
         </div>
       </div>

@@ -72,12 +72,12 @@ export default function SuppliersPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <div>
           <h1 className="text-2xl font-bold text-white">Suppliers</h1>
           <p className="text-sm text-carbon-500 mt-1">Manage suppliers and view Scope 1, 2, 3 emissions</p>
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-shrink-0">
           <button onClick={() => setShowPdfUpload(true)} className="btn-secondary flex items-center gap-2">
             <Upload className="w-4 h-4" /> Import Excel
           </button>

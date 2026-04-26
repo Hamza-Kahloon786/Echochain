@@ -94,8 +94,8 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex overflow-hidden" style={{ background: '#0f1117' }}>
 
-      {/* Back to Home — fixed top-left */}
-      <div className="fixed top-5 left-5 z-20">
+      {/* Back to Home — fixed top-left, hidden on tiny screens (mobile logo already links home) */}
+      <div className="fixed top-5 left-5 z-20 hidden sm:block">
         <Link
           to="/"
           className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-carbon-300 hover:text-white transition-all duration-200"
