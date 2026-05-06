@@ -100,7 +100,7 @@ def generate_recommendations(emissions_data: dict) -> dict:
     recommendations.append({
         "id": rec_id, "category": "Reporting", "priority": "Low",
         "title": "Automate SECR/UK ETS compliance reporting",
-        "description": "Use EchoChain's reporting module to auto-generate SECR-compliant reports. This saves consultant costs (£5k-£30k) and ensures accuracy.",
+        "description": "Use Chain scope AI's reporting module to auto-generate SECR-compliant reports. This saves consultant costs (£5k-£30k) and ensures accuracy.",
         "potential_reduction_pct": 0,
         "potential_reduction_kgco2e": 0,
         "effort": "Low", "scope": "All",

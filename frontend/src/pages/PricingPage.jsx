@@ -93,11 +93,11 @@ const FAQS = [
   },
   {
     q: 'What emission factors do you use?',
-    a: 'EchoChain uses DEFRA 2024 conversion factors for all UK-based calculations, updated automatically when new factors are published.',
+    a: 'Chain scope AI uses DEFRA 2024 conversion factors for all UK-based calculations, updated automatically when new factors are published.',
   },
   {
     q: 'Do you offer discounts for charities or non-profits?',
-    a: 'Yes — contact us at pricing@echochain.uk with proof of charitable status and we\'ll apply a 40% discount.',
+    a: 'Yes — contact us at pricing@Chain scope AI.uk with proof of charitable status and we\'ll apply a 40% discount.',
   },
 ];
 
@@ -112,7 +112,7 @@ export default function PricingPage() {
 
   const handleChoosePlan = async (plan) => {
     if (plan.id === 'enterprise') {
-      window.location.href = 'mailto:sales@echochain.uk?subject=Enterprise Enquiry';
+      window.location.href = 'mailto:sales@Chain scope AI.uk?subject=Enterprise Enquiry';
       return;
     }
 
@@ -147,7 +147,7 @@ export default function PricingPage() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center group-hover:scale-105 transition-transform">
               <Leaf className="w-4 h-4 text-white" />
             </div>
-            <span className="text-base font-bold text-white tracking-tight">EchoChain</span>
+            <span className="text-base font-bold text-white tracking-tight">Chain scope AI</span>
           </Link>
           <div className="flex items-center gap-3">
             {isAuthenticated ? (
@@ -390,7 +390,7 @@ export default function PricingPage() {
           <p className="text-carbon-400 mb-7 max-w-md mx-auto">
             Large supply chains, government bodies, or multi-entity groups — talk to us about a tailored solution.
           </p>
-          <a href="mailto:sales@echochain.uk" className="btn-primary inline-flex items-center gap-2 px-8 py-3.5">
+          <a href="mailto:sales@Chain scope AI.uk" className="btn-primary inline-flex items-center gap-2 px-8 py-3.5">
             Contact Sales <ArrowRight className="w-4 h-4" />
           </a>
         </div>

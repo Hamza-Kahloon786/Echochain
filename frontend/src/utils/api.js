@@ -10,7 +10,7 @@ const api = axios.create({
 
 // Attach token to every request
 api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('echochain_token');
+  const token = localStorage.getItem('Chain scope AI_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -22,7 +22,7 @@ api.interceptors.response.use(
   (res) => res,
   (err) => {
     if (err.response?.status === 401) {
-      localStorage.removeItem('echochain_token');
+      localStorage.removeItem('Chain scope AI_token');
       window.location.href = '/'; // back to landing page, not hard-coded /login
     }
     return Promise.reject(err);

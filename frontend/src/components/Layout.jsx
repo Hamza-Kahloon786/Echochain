@@ -45,7 +45,7 @@ export default function Layout() {
             <Leaf className="w-5 h-5 text-white" />
           </div>
           <div>
-            <h1 className="text-lg font-bold text-white tracking-tight">EchoChain</h1>
+            <h1 className="text-lg font-bold text-white tracking-tight">Chain scope AI</h1>
             <p className="text-[10px] text-carbon-500 uppercase tracking-widest">Carbon Identifier</p>
           </div>
           <button className="lg:hidden ml-auto text-carbon-400" onClick={() => setSidebarOpen(false)}>

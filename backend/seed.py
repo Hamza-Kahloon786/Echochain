@@ -1,5 +1,5 @@
 """
-Seed script: Populates MongoDB with demo data for EchoChain.
+Seed script: Populates MongoDB with demo data for Chain scope AI.
 Run: python seed.py
 """
 import asyncio
@@ -13,10 +13,10 @@ from app.utils.emission_factors import (
 from datetime import datetime
 
 MONGODB_URL = "mongodb://localhost:27017"
-DATABASE_NAME = "echochain"
+DATABASE_NAME = "Chain scope AI"
 
 DEMO_USER = {
-    "email": "demo@echochain.uk",
+    "email": "demo@Chain scope AI.uk",
     "password": hash_password("demo123"),
     "company_name": "GreenLogistics UK Ltd",
 }
@@ -126,7 +126,7 @@ async def seed():
     print(f"Seeded {len(TRANSPORT_ROUTES)} transport routes")
 
     print("\n✅ Seed complete!")
-    print(f"Login: demo@echochain.uk / demo123")
+    print(f"Login: demo@Chain scope AI.uk / demo123")
 
     client.close()
 

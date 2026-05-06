@@ -49,7 +49,7 @@ export default function PaymentSuccessPage() {
             </svg>
           </div>
           <span className="text-white font-bold text-xl tracking-tight group-hover:text-echo-400 transition-colors">
-            EchoChain
+            Chain scope AI
           </span>
         </button>
 
@@ -153,8 +153,8 @@ export default function PaymentSuccessPage() {
         {/* Footer note */}
         <p className="text-center text-carbon-600 text-xs mt-6">
           Questions? Email us at{' '}
-          <a href="mailto:support@echochain.io" className="text-carbon-400 hover:text-echo-400 transition-colors">
-            support@echochain.io
+          <a href="mailto:support@Chain scope AI.io" className="text-carbon-400 hover:text-echo-400 transition-colors">
+            support@Chain scope AI.io
           </a>
         </p>
       </div>

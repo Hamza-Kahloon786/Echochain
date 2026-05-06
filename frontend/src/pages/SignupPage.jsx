@@ -76,7 +76,7 @@ export default function SignupPage() {
     setLoading(true);
     try {
       await register(form.email, form.password, form.company_name, '', form.company_phone, form.company_address);
-      toast.success('Account created! Welcome to EchoChain.');
+      toast.success('Account created! Welcome to Chain scope AI.');
       navigate('/app');
     } catch (err) {
       const detail = err.response?.data?.detail;
@@ -117,7 +117,7 @@ export default function SignupPage() {
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center shadow-lg shadow-echo-900/50 group-hover:scale-105 transition-transform">
             <Leaf className="w-5 h-5 text-white" />
           </div>
-          <span className="text-xl font-bold text-white tracking-tight">EchoChain</span>
+          <span className="text-xl font-bold text-white tracking-tight">Chain scope AI</span>
         </Link>
 
         {/* Middle: headline + perks */}
@@ -131,7 +131,7 @@ export default function SignupPage() {
             <span className="text-echo-400">reaching Net Zero faster</span>
           </h2>
           <p className="text-carbon-400 text-base leading-relaxed mb-10">
-            EchoChain gives your sustainability team an AI-powered carbon intelligence platform — from hotspot detection to actionable reduction plans.
+            Chain scope AI gives your sustainability team an AI-powered carbon intelligence platform — from hotspot detection to actionable reduction plans.
           </p>
           <ul className="space-y-4" aria-label="Platform features">
             {PERKS.map(({ Icon, text }) => (
@@ -172,7 +172,7 @@ export default function SignupPage() {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center">
               <Leaf className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">EchoChain</span>
+            <span className="text-lg font-bold text-white tracking-tight">Chain scope AI</span>
           </Link>
 
           {/* Heading */}
@@ -313,7 +313,7 @@ export default function SignupPage() {
                   </div>
                 </div>
                 <span className="text-sm text-carbon-400 leading-snug">
-                  I agree to EchoChain's{' '}
+                  I agree to Chain scope AI's{' '}
                   <button type="button" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Terms of Service</button>
                   {' '}and{' '}
                   <button type="button" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Privacy Policy</button>

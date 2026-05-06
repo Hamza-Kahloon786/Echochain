@@ -1,4 +1,4 @@
-"""Pydantic schemas for EchoChain data models."""
+"""Pydantic schemas for Chain scope AI data models."""
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from datetime import datetime

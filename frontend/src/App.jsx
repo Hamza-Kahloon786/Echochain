@@ -37,7 +37,7 @@ function AppRoutes() {
               <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
             </svg>
           </div>
-          <p className="text-carbon-500 text-sm">Loading EchoChain…</p>
+          <p className="text-carbon-500 text-sm">Loading Chain scope AI…</p>
         </div>
       </div>
     );
