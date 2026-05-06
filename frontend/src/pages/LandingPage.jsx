@@ -61,11 +61,11 @@ const USE_CASES = [
 ];
 
 const TESTIMONIALS = [
-  { quote: "EchoChain flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
+  { quote: "Chain scope AI flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
   { quote: "The forecasting engine is genuinely impressive. We now model the carbon impact of a supplier swap before committing — that's never been possible before.", name: 'James Clifton', role: 'Supply Chain Director, NovaTech UK',          img: 'https://picsum.photos/id/1012/100/100' },
   { quote: "Setup took 20 minutes. Within a week we had a full heatmap of our UK operations. The AI recommendations alone justified the subscription in month one.",   name: 'Rachel Torres', role: 'ESG Officer, LayerStack',                     img: 'https://picsum.photos/id/1027/100/100' },
   { quote: "Live grid intensity scheduling cut our electricity-related emissions by 22% — we didn't change a single process, just shifted the timing.",               name: 'David Okafor',  role: 'Operations Manager, ClearPath Logistics',    img: 'https://picsum.photos/id/1074/100/100' },
-  { quote: "Our investors now ask for EchoChain reports directly. It's become the standard for how we communicate carbon performance across the board.",              name: 'Emma Walsh',    role: 'CEO, Apex Green Manufacturing',              img: 'https://picsum.photos/id/1062/100/100' },
+  { quote: "Our investors now ask for Chain scope AI reports directly. It's become the standard for how we communicate carbon performance across the board.",              name: 'Emma Walsh',    role: 'CEO, Apex Green Manufacturing',              img: 'https://picsum.photos/id/1062/100/100' },
 ];
 
 const STATS = [
@@ -195,11 +195,11 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
 
           {/* Logo */}
-          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2.5 group" aria-label="EchoChain home">
+          <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="flex items-center gap-2.5 group" aria-label="Chain scope AI home">
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center shadow-lg shadow-echo-900/40 group-hover:scale-105 transition-transform duration-200">
               <Leaf className="w-5 h-5 text-white" />
             </div>
-            <span className="text-lg font-bold text-white tracking-tight">EchoChain</span>
+            <span className="text-lg font-bold text-white tracking-tight">Chain scope AI</span>
           </button>
 
           {/* Desktop links */}
@@ -359,7 +359,7 @@ export default function LandingPage() {
                 <div className="flex-1 flex items-center justify-center">
                   <div className="flex items-center gap-2 px-4 py-1.5 rounded-lg text-xs text-carbon-500" style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.07)' }}>
                     <div className="w-1.5 h-1.5 rounded-full bg-echo-400 animate-pulse" />
-                    app.echochain.io/dashboard
+                    app.Chain scope AI.io/dashboard
                   </div>
                 </div>
                 <div className="hidden sm:flex items-center gap-2 text-xs text-carbon-600">
@@ -376,7 +376,7 @@ export default function LandingPage() {
                     <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0" style={{ background: 'linear-gradient(135deg, #14d15e, #09ad4a)' }}>
                       <Leaf className="w-3.5 h-3.5 text-white" />
                     </div>
-                    <span className="text-sm font-bold text-white">EchoChain</span>
+                    <span className="text-sm font-bold text-white">Chain scope AI</span>
                   </div>
                   {[
                     { icon: BarChart3, label: 'Dashboard', active: true },
@@ -589,7 +589,7 @@ export default function LandingPage() {
             <div className="lp-animate-left relative rounded-2xl overflow-hidden group" style={{ opacity: 0, transform: 'translateX(-32px)' }}>
               <img
                 src="https://picsum.photos/id/1/800/600"
-                alt="EchoChain dashboard showing carbon hotspot analysis"
+                alt="Chain scope AI dashboard showing carbon hotspot analysis"
                 loading="lazy"
                 className="w-full h-[460px] object-cover transition-transform duration-700 group-hover:scale-[1.04]"
               />
@@ -609,14 +609,14 @@ export default function LandingPage() {
             {/* Text side */}
             <div className="lp-animate-right" style={{ opacity: 0, transform: 'translateX(32px)' }}>
               <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-echo-500/25 bg-echo-500/8 text-echo-400 text-xs font-semibold tracking-widest uppercase mb-5">
-                <Shield className="w-3 h-3" /> Why EchoChain
+                <Shield className="w-3 h-3" /> Why Chain scope AI
               </span>
               <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight mb-4">
                 Built for businesses that<br />
                 <span className="text-echo-400">can't afford to miss</span>
               </h2>
               <p className="text-carbon-400 text-base leading-relaxed mb-7">
-                We built EchoChain because spreadsheets and annual audits can't keep pace with the urgency of Net Zero. Our AI engine runs continuously, catching new hotspots as your supply chain evolves.
+                We built Chain scope AI because spreadsheets and annual audits can't keep pace with the urgency of Net Zero. Our AI engine runs continuously, catching new hotspots as your supply chain evolves.
               </p>
 
               <ul className="space-y-3.5 mb-9" aria-label="Key benefits">
@@ -661,7 +661,7 @@ export default function LandingPage() {
             </span>
             <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
               How UK businesses use<br />
-              <span className="text-echo-400">EchoChain every day</span>
+              <span className="text-echo-400">Chain scope AI every day</span>
             </h2>
             <p className="text-carbon-400 text-lg mt-4 max-w-xl mx-auto">
               From retail to healthcare — see how teams across industries map and cut their carbon footprint.
@@ -803,7 +803,7 @@ export default function LandingPage() {
                 <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center">
                   <Leaf className="w-5 h-5 text-white" />
                 </div>
-                <span className="text-lg font-bold text-white tracking-tight">EchoChain</span>
+                <span className="text-lg font-bold text-white tracking-tight">Chain scope AI</span>
               </div>
               <p className="text-sm text-carbon-500 leading-relaxed mb-5 max-w-[240px]">
                 AI-powered carbon intelligence for UK supply chains. Identify hotspots, forecast emissions, reach Net Zero.
@@ -856,7 +856,7 @@ export default function LandingPage() {
               <h3 className="text-xs font-bold tracking-[0.1em] uppercase text-white mb-4">Social</h3>
               <div className="flex gap-2.5" role="list">
                 {[['Twitter / X', Twitter], ['LinkedIn', Linkedin], ['YouTube', Youtube], ['GitHub', Github]].map(([label, Icon]) => (
-                  <button key={label} aria-label={`EchoChain on ${label}`} role="listitem"
+                  <button key={label} aria-label={`Chain scope AI on ${label}`} role="listitem"
                     className="w-9 h-9 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 hover:bg-echo-500/10 transition-all duration-200 hover:-translate-y-0.5">
                     <Icon className="w-4 h-4" />
                   </button>
@@ -866,7 +866,7 @@ export default function LandingPage() {
           </div>
 
           <div className="flex items-center justify-between pt-7 flex-wrap gap-4 text-xs text-carbon-600">
-            <span>© {new Date().getFullYear()} EchoChain Ltd. All rights reserved.</span>
+            <span>© {new Date().getFullYear()} Chain scope AI Ltd. All rights reserved.</span>
             <span className="flex gap-5">
               {['Privacy','Terms','Cookies'].map(l => (
                 <button key={l} className="hover:text-carbon-400 transition-colors">{l}</button>

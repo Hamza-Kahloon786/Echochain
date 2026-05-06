@@ -4,18 +4,18 @@ import api from '../utils/api';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token,   setToken]   = useState(localStorage.getItem('echochain_token'));
-  const [loading, setLoading] = useState(!!localStorage.getItem('echochain_token')); // true while validating
+  const [token,   setToken]   = useState(localStorage.getItem('Chain scope AI_token'));
+  const [loading, setLoading] = useState(!!localStorage.getItem('Chain scope AI_token')); // true while validating
 
   // Validate stored token on mount — clears it if the backend rejects it
   useEffect(() => {
-    const stored = localStorage.getItem('echochain_token');
+    const stored = localStorage.getItem('Chain scope AI_token');
     if (!stored) { setLoading(false); return; }
 
     api.get('/auth/me')
       .then(() => setLoading(false))
       .catch(() => {
-        localStorage.removeItem('echochain_token');
+        localStorage.removeItem('Chain scope AI_token');
         setToken(null);
         setLoading(false);
       });
@@ -24,7 +24,7 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
     const t = res.data.access_token;
-    localStorage.setItem('echochain_token', t);
+    localStorage.setItem('Chain scope AI_token', t);
     setToken(t);
     return res.data;
   };
@@ -32,13 +32,13 @@ export function AuthProvider({ children }) {
   const register = async (email, password, company_name, full_name = '', company_phone = '', company_address = '') => {
     const res = await api.post('/auth/register', { email, password, company_name, full_name, company_phone, company_address });
     const t = res.data.access_token;
-    localStorage.setItem('echochain_token', t);
+    localStorage.setItem('Chain scope AI_token', t);
     setToken(t);
     return res.data;
   };
 
   const logout = () => {
-    localStorage.removeItem('echochain_token');
+    localStorage.removeItem('Chain scope AI_token');
     setToken(null);
   };
 

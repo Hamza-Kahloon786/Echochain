@@ -1,4 +1,4 @@
-"""Stripe payment routes for EchoChain subscriptions."""
+"""Stripe payment routes for Chain scope AI subscriptions."""
 import os
 import logging
 from datetime import datetime

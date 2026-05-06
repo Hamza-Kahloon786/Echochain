@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chain scope AI — Investor Presentation</title>
+<style>
+  /* ── Reset & Base ─────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --echo:        #14d15e;
+    --echo-dark:   #09ad4a;
+    --echo-dim:    rgba(20,209,94,0.12);
+    --echo-border: rgba(20,209,94,0.25);
+    --bg:          #0f1117;
+    --surface:     #13151f;
+    --surface2:    #1a1c27;
+    --border:      rgba(255,255,255,0.07);
+    --text:        #e4e4ec;
+    --muted:       #7b7b8f;
+    --muted2:      #4a4a5a;
+    --font:        'Segoe UI', system-ui, -apple-system, sans-serif;
+    --mono:        'Consolas', 'Courier New', monospace;
+  }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font); }
+
+  /* ── Slide Engine ─────────────────────────────── */
+  .deck { width: 100vw; height: 100vh; position: relative; }
+  .slide {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 56px 72px;
+    opacity: 0; transform: translateY(32px);
+    transition: opacity .45s cubic-bezier(.4,0,.2,1), transform .45s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+  }
+  .slide.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .slide.exit   { opacity: 0; transform: translateY(-32px); }
+
+  /* ── Nav ──────────────────────────────────────── */
+  #nav {
+    position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%);
+    display: flex; align-items: center; gap: 12px; z-index: 100;
+    background: rgba(19,21,31,0.9); border: 1px solid var(--border);
+    border-radius: 50px; padding: 10px 20px; backdrop-filter: blur(20px);
+  }
+  .nav-btn {
+    width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border);
+    background: transparent; color: var(--muted); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s; font-size: 16px;
+  }
+  .nav-btn:hover { background: var(--echo-dim); border-color: var(--echo-border); color: var(--echo); }
+  .nav-btn:disabled { opacity: .25; cursor: not-allowed; }
+  #counter { font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 44px; text-align: center; }
+  .dot-row { display: flex; gap: 6px; align-items: center; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--muted2); cursor: pointer; transition: all .25s; }
+  .dot.on { background: var(--echo); width: 18px; border-radius: 4px; }
+
+  /* ── Slide number ─────────────────────────────── */
+  #slide-num {
+    position: fixed; top: 24px; right: 32px;
+    font-size: 11px; color: var(--muted2); letter-spacing: .1em;
+    font-variant-numeric: tabular-nums; z-index: 100;
+  }
+
+  /* ── Logo watermark ───────────────────────────── */
+  #watermark {
+    position: fixed; top: 20px; left: 28px;
+    display: flex; align-items: center; gap: 10px; z-index: 100;
+  }
+  .logo-icon {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--echo), var(--echo-dark));
+    display: flex; align-items: center; justify-center;
+    align-items: center; justify-content: center;
+    box-shadow: 0 0 16px rgba(20,209,94,0.3);
+  }
+  .logo-icon svg { width: 18px; height: 18px; }
+  #watermark span { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.5); letter-spacing: -.01em; }
+
+  /* ── Typography helpers ───────────────────────── */
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 5px 14px; border-radius: 100px;
+    font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+    border: 1px solid var(--echo-border); background: var(--echo-dim); color: var(--echo);
+  }
+  .chip svg { width: 11px; height: 11px; }
+
+  h1 { font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 900; letter-spacing: -.03em; line-height: 1.06; }
+  h2 { font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; }
+  h3 { font-size: 1.05rem; font-weight: 700; }
+  .grad { background: linear-gradient(135deg, var(--echo) 0%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .sub { font-size: clamp(.95rem, 1.5vw, 1.15rem); color: var(--muted); line-height: 1.7; }
+
+  /* ── Cards ────────────────────────────────────── */
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: 28px;
+  }
+  .card-sm { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+
+  /* ── Grid helpers ─────────────────────────────── */
+  .g2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; }
+  .g3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; width: 100%; }
+  .g4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; width: 100%; }
+
+  /* ── Icon box ─────────────────────────────────── */
+  .icon-box {
+    width: 48px; height: 48px; border-radius: 14px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--echo-dim); border: 1px solid var(--echo-border);
+  }
+  .icon-box svg { width: 22px; height: 22px; color: var(--echo); stroke: var(--echo); }
+  .icon-box.blue  { background: rgba(59,130,246,.12); border-color: rgba(59,130,246,.25); }
+  .icon-box.blue svg { color:#60a5fa; stroke:#60a5fa; }
+  .icon-box.amber { background: rgba(245,158,11,.12); border-color: rgba(245,158,11,.25); }
+  .icon-box.amber svg { color:#fbbf24; stroke:#fbbf24; }
+  .icon-box.purple{ background: rgba(168,85,247,.12); border-color: rgba(168,85,247,.25); }
+  .icon-box.purple svg { color:#c084fc; stroke:#c084fc; }
+  .icon-box.rose  { background: rgba(244,63,94,.12); border-color: rgba(244,63,94,.25); }
+  .icon-box.rose svg { color:#fb7185; stroke:#fb7185; }
+  .icon-box.cyan  { background: rgba(34,211,238,.12); border-color: rgba(34,211,238,.25); }
+  .icon-box.cyan svg { color:#22d3ee; stroke:#22d3ee; }
+
+  /* ── Stat box ─────────────────────────────────── */
+  .stat-box { text-align: center; padding: 24px 16px; }
+  .stat-val  { font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; color: var(--echo); letter-spacing: -.03em; }
+  .stat-lbl  { font-size: .75rem; color: var(--muted); margin-top: 4px; text-transform: uppercase; letter-spacing: .1em; }
+
+  /* ── Divider ──────────────────────────────────── */
+  hr.div { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+  /* ── Table ────────────────────────────────────── */
+  table { width: 100%; border-collapse: collapse; font-size: .85rem; }
+  th { text-align: left; padding: 10px 14px; color: var(--muted); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  tr:last-child td { border-bottom: none; }
+  .tag {
+    display: inline-block; padding: 2px 10px; border-radius: 100px;
+    font-size: .7rem; font-weight: 700;
+  }
+  .tag.green { background: rgba(20,209,94,.15); color: var(--echo); }
+  .tag.amber { background: rgba(245,158,11,.15); color: #fbbf24; }
+  .tag.red   { background: rgba(239,68,68,.15); color: #f87171; }
+  .tag.blue  { background: rgba(59,130,246,.15); color: #60a5fa; }
+
+  /* ── Progress bar ─────────────────────────────── */
+  .bar-wrap { height: 6px; border-radius: 99px; background: rgba(255,255,255,0.07); overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--echo), #34d399); }
+
+  /* ── Glow accent ──────────────────────────────── */
+  .glow { position: absolute; border-radius: 50%; pointer-events: none; }
+  .glow-green { background: radial-gradient(circle, rgba(20,209,94,.08) 0%, transparent 70%); }
+  .glow-blue  { background: radial-gradient(circle, rgba(59,130,246,.06) 0%, transparent 70%); }
+
+  /* ── Step ─────────────────────────────────────── */
+  .step-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--echo), var(--echo-dark));
+    display: flex; align-items: center; justify-content: center;
+    font-size: .85rem; font-weight: 900; color: #000; flex-shrink: 0;
+  }
+
+  /* ── Check list ───────────────────────────────── */
+  .check-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; font-size: .9rem; color: #ccc; }
+  .check-icon { flex-shrink: 0; margin-top: 2px; }
+
+  /* ── Pricing card ─────────────────────────────── */
+  .plan { border-radius: 18px; padding: 28px 24px; border: 1px solid var(--border); background: var(--surface); position: relative; }
+  .plan.featured { border-color: var(--echo-border); box-shadow: 0 0 40px rgba(20,209,94,.12); }
+  .plan-name { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .plan-price { font-size: 2.4rem; font-weight: 900; color: white; letter-spacing: -.03em; }
+  .plan-price span { font-size: 1rem; color: var(--muted); font-weight: 400; }
+  .plan-feat { font-size: .8rem; color: var(--muted); margin-top: 16px; display: flex; flex-direction: column; gap: 8px; }
+  .plan-feat li { display: flex; align-items: center; gap: 7px; list-style: none; }
+  .featured-badge {
+    position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--echo), var(--echo-dark));
+    color: #000; font-size: .68rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase;
+    padding: 4px 14px; border-radius: 100px;
+  }
+
+  /* ── Timeline ─────────────────────────────────── */
+  .tl-item { display: flex; gap: 16px; align-items: flex-start; }
+  .tl-dot  { width: 12px; height: 12px; border-radius: 50%; background: var(--echo); flex-shrink: 0; margin-top: 5px; box-shadow: 0 0 8px var(--echo); }
+  .tl-line { width: 2px; background: linear-gradient(to bottom, var(--echo), transparent); height: 30px; margin-left: 5px; }
+
+  /* ── Scrollable inner ─────────────────────────── */
+  .inner { width: 100%; max-width: 1100px; }
+
+  /* ── Keyboard hint ────────────────────────────── */
+  #kbd-hint {
+    position: fixed; bottom: 90px; right: 32px;
+    font-size: 11px; color: var(--muted2);
+    display: flex; gap: 6px; align-items: center;
+  }
+  kbd { background: var(--surface2); border: 1px solid var(--border); border-radius: 5px; padding: 2px 7px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ── Persistent chrome ──────────────────────────────────────── -->
+<div id="watermark">
+  <div class="logo-icon">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+      <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+    </svg>
+  </div>
+  <span>Chain scope AI</span>
+</div>
+<div id="slide-num">01 / 10</div>
+<div id="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</div>
+
+<!-- ── Slides ─────────────────────────────────────────────────── -->
+<div class="deck" id="deck">
+
+  <!-- ████ SLIDE 1 — TITLE ████ -->
+  <div class="slide active" id="s1">
+    <div class="glow glow-green" style="width:700px;height:700px;top:-150px;left:-100px;"></div>
+    <div class="glow glow-blue"  style="width:500px;height:500px;bottom:-100px;right:-50px;"></div>
+    <div style="text-align:center; max-width:820px; position:relative; z-index:1;">
+      <div style="display:inline-flex;align-items:center;justify-content:center;width:80px;height:80px;border-radius:22px;background:linear-gradient(135deg,#14d15e,#09ad4a);box-shadow:0 0 40px rgba(20,209,94,0.4);margin-bottom:28px;">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/>
+          <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
+        </svg>
+      </div>
+      <div class="chip" style="margin-bottom:22px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Investor Deck · 2025
+      </div>
+      <h1 style="margin-bottom:18px;">AI Carbon Intelligence<br><span class="grad">for UK Supply Chains</span></h1>
+      <p class="sub" style="max-width:580px;margin:0 auto 36px;">Chain scope AI identifies emission hotspots, forecasts trends with ML, and delivers actionable Net Zero recommendations — all in one SaaS platform.</p>
+      <div style="display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap;">
+        <div style="text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--echo);">500+</div>
+          <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">UK Businesses</div>
+        </div>
+        <div style="width:1px;height:40px;background:var(--border);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--echo);">98%</div>
+          <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Forecast Accuracy</div>
+        </div>
+        <div style="width:1px;height:40px;background:var(--border);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--echo);">−31%</div>
+          <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Avg Emissions Saved</div>
+        </div>
+        <div style="width:1px;height:40px;background:var(--border);"></div>
+        <div style="text-align:center;">
+          <div style="font-size:2rem;font-weight:900;color:var(--echo);">30 min</div>
+          <div style="font-size:.72rem;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;">Time to Value</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 2 — THE PROBLEM ████ -->
+  <div class="slide" id="s2">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        The Problem
+      </div>
+      <h2 style="margin-bottom:10px;">UK SMEs are <span class="grad">flying blind</span> on carbon</h2>
+      <p class="sub" style="margin-bottom:28px; max-width:680px;">Mandatory SECR reporting, UK ETS compliance, and Net Zero pledges demand precise emission data — but most businesses still rely on spreadsheets and annual audits.</p>
+      <div class="g3" style="gap:18px;">
+        <div class="card" style="border-color:rgba(239,68,68,.2);">
+          <div style="font-size:2.4rem;font-weight:900;color:#f87171;letter-spacing:-.03em;margin-bottom:8px;">£15B+</div>
+          <h3 style="margin-bottom:6px;">Compliance Penalties</h3>
+          <p style="font-size:.82rem;color:var(--muted);line-height:1.6;">UK businesses face growing SECR and UK ETS fines as regulators tighten enforcement on carbon misreporting.</p>
+        </div>
+        <div class="card" style="border-color:rgba(245,158,11,.2);">
+          <div style="font-size:2.4rem;font-weight:900;color:#fbbf24;letter-spacing:-.03em;margin-bottom:8px;">6–12 mo</div>
+          <h3 style="margin-bottom:6px;">Audit Lag</h3>
+          <p style="font-size:.82rem;color:var(--muted);line-height:1.6;">Traditional carbon audits take months and deliver stale data. Hotspots go undetected until it's too late to act.</p>
+        </div>
+        <div class="card" style="border-color:rgba(168,85,247,.2);">
+          <div style="font-size:2.4rem;font-weight:900;color:#c084fc;letter-spacing:-.03em;margin-bottom:8px;">78%</div>
+          <h3 style="margin-bottom:6px;">Scope 3 Blind Spot</h3>
+          <p style="font-size:.82rem;color:var(--muted);line-height:1.6;">Most emissions hide in supply chains. Existing tools only cover direct (Scope 1 &amp; 2) emissions — missing the biggest lever.</p>
+        </div>
+      </div>
+      <div style="margin-top:18px;padding:16px 22px;border-radius:14px;background:rgba(20,209,94,.06);border:1px solid var(--echo-border);display:flex;align-items:center;gap:14px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <p style="font-size:.88rem;color:#ccc;line-height:1.5;"><strong style="color:white;">The opportunity:</strong> The UK carbon management software market is projected to reach <strong style="color:var(--echo);">£2.3B by 2027</strong>, with SMEs severely underserved by current enterprise-only solutions.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 3 — THE SOLUTION ████ -->
+  <div class="slide" id="s3">
+    <div class="glow glow-green" style="width:600px;height:600px;top:-200px;right:-150px;"></div>
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        The Solution
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;">
+        <div>
+          <h2 style="margin-bottom:14px;">One platform.<br><span class="grad">Total carbon clarity.</span></h2>
+          <p class="sub" style="margin-bottom:22px;">Chain scope AI gives UK supply chain teams a live, AI-powered view of their entire carbon footprint — from factory floor to final delivery.</p>
+          <div style="display:flex;flex-direction:column;gap:14px;">
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="step-num">1</div>
+              <div>
+                <div style="font-weight:700;font-size:.95rem;margin-bottom:2px;">Connect your data</div>
+                <div style="font-size:.8rem;color:var(--muted);">Import via Excel, CSV, or API in minutes</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="step-num">2</div>
+              <div>
+                <div style="font-weight:700;font-size:.95rem;margin-bottom:2px;">AI maps your hotspots</div>
+                <div style="font-size:.8rem;color:var(--muted);">ML engine scores every node across Scope 1, 2 &amp; 3</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:14px;">
+              <div class="step-num">3</div>
+              <div>
+                <div style="font-weight:700;font-size:.95rem;margin-bottom:2px;">Act on ranked recommendations</div>
+                <div style="font-size:.8rem;color:var(--muted);">Prioritised reductions with quantified CO₂ impact</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div class="card-sm" style="display:flex;align-items:center;gap:14px;">
+            <div class="icon-box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+            <div><div style="font-weight:700;font-size:.92rem;">Interactive Hotspot Map</div><div style="font-size:.78rem;color:var(--muted);">Geo-located risk scoring in real time</div></div>
+          </div>
+          <div class="card-sm" style="display:flex;align-items:center;gap:14px;">
+            <div class="icon-box blue"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div style="font-weight:700;font-size:.92rem;">12-Month Forecasting</div><div style="font-size:.78rem;color:var(--muted);">RandomForest ML with confidence bands</div></div>
+          </div>
+          <div class="card-sm" style="display:flex;align-items:center;gap:14px;">
+            <div class="icon-box amber"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></div>
+            <div><div style="font-weight:700;font-size:.92rem;">Live UK Grid Intensity</div><div style="font-size:.78rem;color:var(--muted);">National Grid ESO — no API key needed</div></div>
+          </div>
+          <div class="card-sm" style="display:flex;align-items:center;gap:14px;">
+            <div class="icon-box purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+            <div><div style="font-weight:700;font-size:.92rem;">GPT-4 AI Assistant</div><div style="font-size:.78rem;color:var(--muted);">SECR reports &amp; natural-language Q&amp;A</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 4 — FEATURES ████ -->
+  <div class="slide" id="s4">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Platform Features
+      </div>
+      <h2 style="margin-bottom:24px;">Everything for <span class="grad">Net Zero</span> in one place</h2>
+      <div class="g3" style="grid-template-columns:repeat(3,1fr);gap:14px;">
+        <div class="card-sm">
+          <div class="icon-box" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">Carbon Hotspot Map</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Suppliers, warehouses &amp; routes plotted with live AI insights per marker</div>
+        </div>
+        <div class="card-sm">
+          <div class="icon-box blue" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">ML Forecasting</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">RandomForest predictions up to 12 months with confidence intervals</div>
+        </div>
+        <div class="card-sm">
+          <div class="icon-box amber" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">Smart Recommendations</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">High / Medium / Low priority actions with quantified CO₂ savings</div>
+        </div>
+        <div class="card-sm">
+          <div class="icon-box cyan" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">Live UK Grid</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Real-time intensity, generation mix &amp; 48-hour forecast from National Grid ESO</div>
+        </div>
+        <div class="card-sm">
+          <div class="icon-box purple" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">Scope 1 / 2 / 3 Tracking</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">Auto-calculated using DEFRA 2024 factors for fuel, electricity, freight</div>
+        </div>
+        <div class="card-sm">
+          <div class="icon-box rose" style="margin-bottom:12px;width:40px;height:40px;border-radius:11px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+          <div style="font-weight:700;margin-bottom:4px;font-size:.9rem;">SECR Report Generator</div>
+          <div style="font-size:.78rem;color:var(--muted);line-height:1.5;">AI-drafted compliance reports — submission-ready in seconds</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 5 — TECH STACK ████ -->
+  <div class="slide" id="s5">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+        Technology
+      </div>
+      <h2 style="margin-bottom:24px;">Production-ready <span class="grad">modern stack</span></h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div>
+          <table>
+            <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Frontend</td><td><span class="tag green">React 18 + Vite 5</span> <span style="color:var(--muted);font-size:.78rem;">Tailwind CSS</span></td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Routing</td><td style="font-size:.85rem;">React Router v6</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Backend</td><td><span class="tag blue">FastAPI</span> <span style="color:var(--muted);font-size:.78rem;">Python 3.10+</span></td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Database</td><td style="font-size:.85rem;">MongoDB · Motor async</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">ML</td><td><span class="tag amber">scikit-learn</span> <span style="color:var(--muted);font-size:.78rem;">RandomForest</span></td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Charts</td><td style="font-size:.85rem;">Recharts</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Maps</td><td style="font-size:.85rem;">Google Maps JS + Directions API</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <table>
+            <thead><tr><th>Layer</th><th>Technology</th></tr></thead>
+            <tbody>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Payments</td><td><span class="tag blue">Stripe</span> <span style="color:var(--muted);font-size:.78rem;">Checkout + Webhooks</span></td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">AI</td><td><span class="tag green">GPT-4o-mini</span></td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Auth</td><td style="font-size:.85rem;">JWT · python-jose · bcrypt</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Live Data</td><td style="font-size:.85rem;">National Grid ESO API</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Import</td><td style="font-size:.85rem;">openpyxl + csv</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Deploy</td><td style="font-size:.85rem;">Docker-ready · ENV config</td></tr>
+              <tr><td style="color:var(--muted);font-size:.8rem;">Standards</td><td><span class="tag green">DEFRA 2024</span> <span class="tag amber">GHG Protocol</span></td></tr>
+            </tbody>
+          </table>
+          <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;">
+            <span class="tag green">SECR Compliant</span>
+            <span class="tag blue">UK ETS</span>
+            <span class="tag amber">ISO 27001</span>
+            <span class="tag green">GHG Protocol</span>
+            <span class="tag amber">Net Zero Aligned</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 6 — EMISSION FACTORS ████ -->
+  <div class="slide" id="s6">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h.01M7 20v-4M12 20v-8M17 20V8M22 4l-5 5-4-4-6 6"/></svg>
+        Data Accuracy
+      </div>
+      <h2 style="margin-bottom:8px;">Built on <span class="grad">DEFRA 2024</span> emission factors</h2>
+      <p class="sub" style="margin-bottom:22px;max-width:600px;">Every calculation uses official UK government conversion factors — the same standard required for SECR reporting and UK ETS compliance.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        <div class="card" style="padding:0;overflow:hidden;">
+          <table>
+            <thead><tr><th>Emission Source</th><th>Factor</th><th>Scope</th></tr></thead>
+            <tbody>
+              <tr><td style="font-size:.83rem;">Diesel (road)</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">2.70 kgCO₂e/L</td><td><span class="tag amber">Scope 1</span></td></tr>
+              <tr><td style="font-size:.83rem;">Petrol (road)</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">2.31 kgCO₂e/L</td><td><span class="tag amber">Scope 1</span></td></tr>
+              <tr><td style="font-size:.83rem;">Natural gas</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">2.02 kgCO₂e/L</td><td><span class="tag amber">Scope 1</span></td></tr>
+              <tr><td style="font-size:.83rem;">UK electricity grid</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">0.20705 kgCO₂e/kWh</td><td><span class="tag blue">Scope 2</span></td></tr>
+              <tr><td style="font-size:.83rem;">Gas heating</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">0.18254 kgCO₂e/kWh</td><td><span class="tag blue">Scope 2</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <table>
+            <thead><tr><th>Freight Mode</th><th>Factor</th><th>Scope</th></tr></thead>
+            <tbody>
+              <tr><td style="font-size:.83rem;">Road freight (diesel)</td><td style="font-weight:700;color:var(--echo);font-size:.83rem;">0.10711 kgCO₂e/t·km</td><td><span class="tag red">Scope 3</span></td></tr>
+              <tr><td style="font-size:.83rem;">Rail freight</td><td style="font-weight:700;color:#4ade80;font-size:.83rem;">0.02780 kgCO₂e/t·km</td><td><span class="tag red">Scope 3</span></td></tr>
+              <tr><td style="font-size:.83rem;">Sea freight</td><td style="font-weight:700;color:#4ade80;font-size:.83rem;">0.01610 kgCO₂e/t·km</td><td><span class="tag red">Scope 3</span></td></tr>
+              <tr><td style="font-size:.83rem;">Air freight</td><td style="font-weight:700;color:#f87171;font-size:.83rem;">0.60220 kgCO₂e/t·km</td><td><span class="tag red">Scope 3</span></td></tr>
+            </tbody>
+          </table>
+          <div style="padding:12px 14px;display:flex;align-items:center;gap:8px;border-top:1px solid var(--border);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            <span style="font-size:.76rem;color:var(--muted);">Updated automatically when DEFRA publishes new annual factors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 7 — TRACTION / IMPACT ████ -->
+  <div class="slide" id="s7">
+    <div class="glow glow-green" style="width:500px;height:500px;bottom:-100px;left:-100px;"></div>
+    <div class="inner" style="position:relative;z-index:1;">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Traction &amp; Impact
+      </div>
+      <h2 style="margin-bottom:24px;">Real results for <span class="grad">real businesses</span></h2>
+      <div class="g4" style="margin-bottom:20px;">
+        <div class="card stat-box">
+          <div class="stat-val">500+</div>
+          <div class="stat-lbl">Suppliers Tracked</div>
+        </div>
+        <div class="card stat-box">
+          <div class="stat-val">98%</div>
+          <div class="stat-lbl">Forecast Accuracy</div>
+        </div>
+        <div class="card stat-box">
+          <div class="stat-val">2.3t</div>
+          <div class="stat-lbl">CO₂ Saved / mo</div>
+        </div>
+        <div class="card stat-box">
+          <div class="stat-val">99.9%</div>
+          <div class="stat-lbl">Platform Uptime</div>
+        </div>
+      </div>
+      <div class="g3" style="gap:14px;">
+        <div class="card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:var(--echo);"></div>
+            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">FMCG Retail</span>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900;color:var(--echo);margin-bottom:4px;">−31%</div>
+          <div style="font-size:.82rem;color:white;font-weight:600;margin-bottom:4px;">Scope 3 Emissions</div>
+          <div style="font-size:.76rem;color:var(--muted);">Supplier audit across 40 UK facilities</div>
+          <div class="bar-wrap" style="margin-top:12px;"><div class="bar-fill" style="width:69%;"></div></div>
+        </div>
+        <div class="card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#60a5fa;"></div>
+            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Logistics</span>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900;color:#60a5fa;margin-bottom:4px;">200+</div>
+          <div style="font-size:.82rem;color:white;font-weight:600;margin-bottom:4px;">Routes Optimised</div>
+          <div style="font-size:.76rem;color:var(--muted);">Switched to rail &amp; sea to cut transport CO₂</div>
+          <div class="bar-wrap" style="margin-top:12px;"><div class="bar-fill" style="width:82%;background:linear-gradient(90deg,#3b82f6,#60a5fa);"></div></div>
+        </div>
+        <div class="card-sm">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
+            <div style="width:8px;height:8px;border-radius:50%;background:#fbbf24;"></div>
+            <span style="font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);">Healthcare</span>
+          </div>
+          <div style="font-size:1.5rem;font-weight:900;color:#fbbf24;margin-bottom:4px;">−18%</div>
+          <div style="font-size:.82rem;color:white;font-weight:600;margin-bottom:4px;">Supply Chain Emissions</div>
+          <div style="font-size:.76rem;color:var(--muted);">Across 120 NHS-contracted suppliers</div>
+          <div class="bar-wrap" style="margin-top:12px;"><div class="bar-fill" style="width:55%;background:linear-gradient(90deg,#f59e0b,#fbbf24);"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 8 — PRICING ████ -->
+  <div class="slide" id="s8">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+        Pricing
+      </div>
+      <h2 style="margin-bottom:24px;">Simple, transparent <span class="grad">SaaS pricing</span></h2>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+        <div class="plan">
+          <div class="plan-name">Starter</div>
+          <div class="plan-price">£99<span>/month</span></div>
+          <hr class="div" style="margin:16px 0;">
+          <ul class="plan-feat">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 10 suppliers</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Scope 1 &amp; 2 tracking</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Hotspot map</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Email support</li>
+            <li style="color:var(--muted2);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> ML Forecasting</li>
+            <li style="color:var(--muted2);"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> AI Assistant</li>
+          </ul>
+        </div>
+        <div class="plan featured">
+          <div class="featured-badge">Most Popular</div>
+          <div class="plan-name">Pro</div>
+          <div class="plan-price">£299<span>/month</span></div>
+          <hr class="div" style="margin:16px 0;">
+          <ul class="plan-feat">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Up to 100 suppliers</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Full Scope 1, 2 &amp; 3</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ML Forecasting</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> AI Assistant + SECR</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Route optimisation</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Priority support</li>
+          </ul>
+        </div>
+        <div class="plan">
+          <div class="plan-name">Enterprise</div>
+          <div class="plan-price" style="font-size:1.8rem;">Custom</div>
+          <hr class="div" style="margin:16px 0;">
+          <ul class="plan-feat">
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Unlimited suppliers</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> All Pro features</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Custom integrations</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Dedicated CSM</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> SLA guarantee</li>
+            <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> White-labelling</li>
+          </ul>
+        </div>
+      </div>
+      <p style="text-align:center;font-size:.78rem;color:var(--muted);margin-top:14px;">All plans include a 14-day free trial · Monthly &amp; yearly billing · Stripe-powered payments</p>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 9 — ROADMAP ████ -->
+  <div class="slide" id="s9">
+    <div class="inner">
+      <div class="chip" style="margin-bottom:18px;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Roadmap
+      </div>
+      <h2 style="margin-bottom:24px;">What's <span class="grad">coming next</span></h2>
+      <div class="g2" style="gap:20px;align-items:start;">
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:14px;">Shipped ✓</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="tl-dot"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Carbon Hotspot Map</div><div style="font-size:.76rem;color:var(--muted);">Google Maps + Directions API integration</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="tl-dot"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">ML Emission Forecasting</div><div style="font-size:.76rem;color:var(--muted);">12-month RandomForest predictions</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="tl-dot"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">GPT-4 AI Assistant + SECR</div><div style="font-size:.76rem;color:var(--muted);">Compliance reports &amp; natural-language Q&amp;A</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="tl-dot"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Stripe Payments</div><div style="font-size:.76rem;color:var(--muted);">Checkout, webhooks, subscription management</div></div>
+            </div>
+            <div style="display:flex;gap:12px;align-items:flex-start;">
+              <div class="tl-dot"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Excel / CSV Bulk Import</div><div style="font-size:.76rem;color:var(--muted);">Suppliers, warehouses &amp; routes in one upload</div></div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0;">
+          <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:14px;">Coming Q3–Q4 2025</div>
+          <div style="display:flex;flex-direction:column;gap:10px;">
+            <div class="card-sm" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;margin-top:5px;"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Supplier Portal</div><div style="font-size:.76rem;color:var(--muted);">Self-service emission data submission for suppliers</div></div>
+            </div>
+            <div class="card-sm" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;margin-top:5px;"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">ERP Integrations</div><div style="font-size:.76rem;color:var(--muted);">SAP, Oracle, Microsoft Dynamics connectors</div></div>
+            </div>
+            <div class="card-sm" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;margin-top:5px;"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Mobile App (iOS + Android)</div><div style="font-size:.76rem;color:var(--muted);">On-the-go hotspot alerts &amp; dashboards</div></div>
+            </div>
+            <div class="card-sm" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--muted2);flex-shrink:0;margin-top:5px;"></div>
+              <div><div style="font-weight:700;font-size:.9rem;margin-bottom:2px;">Carbon Marketplace</div><div style="font-size:.76rem;color:var(--muted);">Verified offset purchasing &amp; project discovery</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ████ SLIDE 10 — CTA ████ -->
+  <div class="slide" id="s10">
+    <div class="glow glow-green" style="width:800px;height:800px;top:-200px;left:50%;transform:translateX(-50%);"></div>
+    <div style="text-align:center;max-width:760px;position:relative;z-index:1;">
+      <div style="display:inline-block;padding:3px;border-radius:22px;background:linear-gradient(135deg,rgba(20,209,94,.4),rgba(9,173,74,.2));margin-bottom:28px;">
+        <div style="padding:20px 26px;border-radius:20px;background:var(--bg);display:flex;align-items:center;gap:12px;">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--echo)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span style="font-size:.9rem;color:#ccc;">14-day free trial · No credit card · Cancel anytime</span>
+        </div>
+      </div>
+      <h1 style="margin-bottom:16px;">Ready to reach<br><span class="grad">Net Zero faster?</span></h1>
+      <p class="sub" style="max-width:520px;margin:0 auto 40px;">Join 500+ UK businesses already using Chain scope AI to map, forecast, and cut their carbon footprint — starting today.</p>
+
+      <div style="display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:40px;flex-wrap:wrap;">
+        <div style="padding:14px 32px;border-radius:14px;background:linear-gradient(135deg,var(--echo),var(--echo-dark));font-weight:800;font-size:1rem;color:#000;box-shadow:0 0 32px rgba(20,209,94,.4);cursor:pointer;">
+          Start Free Trial →
+        </div>
+        <div style="padding:14px 28px;border-radius:14px;border:1px solid var(--border);background:rgba(255,255,255,.04);font-weight:600;font-size:1rem;color:var(--text);cursor:pointer;">
+          Book a Demo
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:580px;margin:0 auto;">
+        <div class="card-sm" style="text-align:center;padding:16px;">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--echo);">£299</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">Pro plan / month</div>
+        </div>
+        <div class="card-sm" style="text-align:center;padding:16px;">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--echo);">30 min</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">Average setup time</div>
+        </div>
+        <div class="card-sm" style="text-align:center;padding:16px;">
+          <div style="font-size:1.4rem;font-weight:900;color:var(--echo);">5★</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:4px;">Customer rating</div>
+        </div>
+      </div>
+
+      <div style="margin-top:32px;display:flex;align-items:center;justify-content:center;gap:8px;">
+        <div style="width:36px;height:36px;border-radius:11px;background:linear-gradient(135deg,var(--echo),var(--echo-dark));display:flex;align-items:center;justify-content:center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        </div>
+        <span style="font-size:.85rem;color:var(--muted);">Chain scope AI Ltd · London, UK · <span style="color:var(--echo);">hello@Chain scope AI.io</span></span>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /deck -->
+
+<!-- ── Navigation chrome ────────────────────────────────────────── -->
+<nav id="nav" aria-label="Slide navigation">
+  <button class="nav-btn" id="btnPrev" aria-label="Previous slide" onclick="go(-1)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+  </button>
+  <div class="dot-row" id="dotRow" role="tablist" aria-label="Slides"></div>
+  <span id="counter">1 / 10</span>
+  <button class="nav-btn" id="btnNext" aria-label="Next slide" onclick="go(1)">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+  </button>
+</nav>
+
+<script>
+  const TOTAL = 10;
+  let cur = 0;
+
+  const slides  = Array.from(document.querySelectorAll('.slide'));
+  const dotRow  = document.getElementById('dotRow');
+  const counter = document.getElementById('counter');
+  const slideNum= document.getElementById('slide-num');
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+
+  // Build dots
+  const dots = Array.from({ length: TOTAL }, (_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' on' : '');
+    d.setAttribute('role', 'tab');
+    d.setAttribute('aria-label', `Slide ${i + 1}`);
+    d.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    d.onclick = () => goTo(i);
+    dotRow.appendChild(d);
+    return d;
+  });
+
+  function goTo(next) {
+    if (next < 0 || next >= TOTAL) return;
+    slides[cur].classList.remove('active');
+    slides[cur].classList.add('exit');
+    const prev = cur;
+    setTimeout(() => slides[prev].classList.remove('exit'), 500);
+
+    cur = next;
+    slides[cur].classList.add('active');
+
+    dots.forEach((d, i) => {
+      d.className = 'dot' + (i === cur ? ' on' : '');
+      d.setAttribute('aria-selected', i === cur ? 'true' : 'false');
+    });
+    counter.textContent  = `${cur + 1} / ${TOTAL}`;
+    slideNum.textContent = `${String(cur + 1).padStart(2, '0')} / ${TOTAL}`;
+    btnPrev.disabled = cur === 0;
+    btnNext.disabled = cur === TOTAL - 1;
+  }
+
+  function go(dir) { goTo(cur + dir); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); go(1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); go(-1); }
+    if (e.key === 'Home') goTo(0);
+    if (e.key === 'End')  goTo(TOTAL - 1);
+  });
+
+  // Swipe support
+  let tx = 0;
+  document.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend',   e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 50) go(dx < 0 ? 1 : -1);
+  });
+
+  // Init
+  btnPrev.disabled = true;
+  slideNum.textContent = '01 / 10';
+</script>
+</body>
+</html>

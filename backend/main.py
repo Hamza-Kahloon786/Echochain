@@ -1,5 +1,5 @@
 """
-EchoChain - AI-Assisted Carbon Hotspot Identifier
+Chain scope AI - AI-Assisted Carbon Hotspot Identifier
 FastAPI Backend Server
 """
 from fastapi import FastAPI
@@ -17,7 +17,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="EchoChain API",
+    title="Chain scope AI API",
     description="AI-Assisted Carbon Hotspot Identifier for UK Supply Chains",
     version="1.0.0",
     lifespan=lifespan,
@@ -48,4 +48,4 @@ app.include_router(excel_upload.router,  prefix="/api/excel",          tags=["Ex
 
 @app.get("/api/health")
 async def health_check():
-    return {"status": "healthy", "service": "EchoChain API"}
+    return {"status": "healthy", "service": "Chain scope AI API"}

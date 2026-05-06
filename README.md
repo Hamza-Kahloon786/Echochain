@@ -1,4 +1,4 @@
-# EchoChain — AI Carbon Intelligence Platform
+# Chain scope AI — AI Carbon Intelligence Platform
 
 > Full-stack SaaS platform that identifies carbon hotspots across UK supply chains, forecasts emission trends with ML, recommends actionable reductions, and visualises optimised transport routes on an interactive map.
 
@@ -46,7 +46,7 @@
 ## Project Structure
 
 ```
-echochain/
+Chain scope AI/
 ├── .gitignore
 ├── README.md
 │
@@ -156,7 +156,7 @@ cp .env.example .env
 
 ```env
 MONGODB_URL=mongodb://localhost:27017
-DATABASE_NAME=echochain
+DATABASE_NAME=Chain scope AI
 SECRET_KEY=change-this-in-production
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=1440

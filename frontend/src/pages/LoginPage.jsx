@@ -48,12 +48,12 @@ export default function LoginPage() {
 
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link to="/" aria-label="EchoChain home">
+          <Link to="/" aria-label="Chain scope AI home">
             <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-echo-600/20 hover:scale-105 transition-transform">
               <Leaf className="w-8 h-8 text-white" />
             </div>
           </Link>
-          <h1 className="text-3xl font-bold text-white tracking-tight">EchoChain</h1>
+          <h1 className="text-3xl font-bold text-white tracking-tight">Chain scope AI</h1>
           <p className="text-carbon-400 text-sm mt-1">AI-Assisted Carbon Hotspot Identifier</p>
         </div>
 
