@@ -16,17 +16,34 @@ import AIAssistantPage from './pages/AIAssistantPage';
 import HotspotMapPage from './pages/HotspotMapPage';
 import PricingPage from './pages/PricingPage';
 import PaymentSuccessPage from './pages/PaymentSuccessPage';
+import AboutPage from './pages/AboutPage';
+import ServicesPage from './pages/ServicesPage';
+import TechServicesPage from './pages/TechServicesPage';
+import BlogPage from './pages/BlogPage';
+import ContactPage from './pages/ContactPage';
+import TermsPage from './pages/TermsPage';
+import PrivacyPage from './pages/PrivacyPage';
+import AdminLayout from './pages/admin/AdminLayout';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
+import AdminSettingsPage from './pages/admin/AdminSettingsPage';
 
 function ProtectedRoute({ children }) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? children : <Navigate to="/login" replace />;
 }
 
-function AppRoutes() {
-  const { isAuthenticated, loading } = useAuth();
+function AdminRoute({ children }) {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+  if (loading) return null;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  if (!isAdmin) return <Navigate to="/app" replace />;
+  return children;
+}
 
-  // Hold rendering until the stored token has been validated against the API.
-  // Without this, a stale token makes the app flash the dashboard then redirect to /login.
+function AppRoutes() {
+  const { isAuthenticated, isAdmin, loading } = useAuth();
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-carbon-950">
@@ -37,7 +54,7 @@ function AppRoutes() {
               <path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/>
             </svg>
           </div>
-          <p className="text-carbon-500 text-sm">Loading Chain scope AI…</p>
+          <p className="text-carbon-500 text-sm">Loading ChainscopeAI…</p>
         </div>
       </div>
     );
@@ -45,20 +62,43 @@ function AppRoutes() {
 
   return (
     <Routes>
-      {/* Public landing page — redirects into the app when already logged in */}
-      <Route path="/" element={isAuthenticated ? <Navigate to="/app" replace /> : <LandingPage />} />
+      {/* Public landing page */}
+      <Route path="/" element={
+        isAuthenticated
+          ? <Navigate to={isAdmin ? '/admin' : '/app'} replace />
+          : <LandingPage />
+      } />
 
-      {/* Auth */}
-      <Route path="/login"   element={isAuthenticated ? <Navigate to="/app" replace /> : <LoginPage />} />
-      <Route path="/signup"  element={isAuthenticated ? <Navigate to="/app" replace /> : <SignupPage />} />
+      {/* Auth — redirect logged-in users appropriately */}
+      <Route path="/login"  element={
+        isAuthenticated ? <Navigate to={isAdmin ? '/admin' : '/app'} replace /> : <LoginPage />
+      } />
+      <Route path="/signup" element={
+        isAuthenticated ? <Navigate to={isAdmin ? '/admin' : '/app'} replace /> : <SignupPage />
+      } />
 
-      {/* Pricing — accessible logged-in or out */}
-      <Route path="/pricing" element={<PricingPage />} />
+      {/* Public pages */}
+      <Route path="/about"          element={<AboutPage />} />
+      <Route path="/services"       element={<ServicesPage />} />
+      <Route path="/tech-services"  element={<TechServicesPage />} />
+      <Route path="/pricing"        element={<PricingPage />} />
+      <Route path="/blog"           element={<BlogPage />} />
+      <Route path="/blog/:slug"     element={<BlogPage />} />
+      <Route path="/contact"        element={<ContactPage />} />
+      <Route path="/terms"          element={<TermsPage />} />
+      <Route path="/privacy"        element={<PrivacyPage />} />
 
-      {/* Payment success — requires auth (token needed to call verify-session) */}
+      {/* Payment success */}
       <Route path="/payment/success" element={<ProtectedRoute><PaymentSuccessPage /></ProtectedRoute>} />
 
-      {/* Protected app — all dashboard routes live under /app/* */}
+      {/* Admin panel — admin role only */}
+      <Route path="/admin" element={<AdminRoute><AdminLayout /></AdminRoute>}>
+        <Route index           element={<AdminDashboardPage />} />
+        <Route path="users"    element={<AdminUsersPage />} />
+        <Route path="settings" element={<AdminSettingsPage />} />
+      </Route>
+
+      {/* Protected app — all dashboard routes under /app/* */}
       <Route path="/app" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route index element={<DashboardPage />} />
         <Route path="suppliers"       element={<SuppliersPage />} />
@@ -71,7 +111,9 @@ function AppRoutes() {
         <Route path="hotspot-map"     element={<HotspotMapPage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to={isAuthenticated ? '/app' : '/'} replace />} />
+      <Route path="*" element={
+        <Navigate to={isAuthenticated ? (isAdmin ? '/admin' : '/app') : '/'} replace />
+      } />
     </Routes>
   );
 }

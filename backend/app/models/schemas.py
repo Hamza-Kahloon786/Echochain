@@ -22,10 +22,45 @@ class UserResponse(BaseModel):
     id: str
     email: str
     company_name: str
+    full_name: str = ""
+    status: str = "pending"
+    role: str = "user"
+
+class RegisterResponse(BaseModel):
+    message: str
+    email: str
+    access_token: Optional[str] = None
+    token_type: str = "bearer"
+    is_admin: bool = False
 
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+# ─── Admin ──────────────────────────────────────────────
+class AdminUserResponse(BaseModel):
+    id: str
+    email: str
+    full_name: str = ""
+    company_name: str = ""
+    company_phone: str = ""
+    company_address: str = ""
+    status: str = "pending"
+    role: str = "user"
+    created_at: Optional[datetime] = None
+
+class AdminStats(BaseModel):
+    total_users: int
+    pending_users: int
+    active_users: int
+    inactive_users: int
+    admin_users: int
+
+class UserStatusUpdate(BaseModel):
+    status: str
+
+class UserRoleUpdate(BaseModel):
+    role: str
 
 
 # ─── Suppliers ──────────────────────────────────────────

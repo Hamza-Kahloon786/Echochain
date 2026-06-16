@@ -6,7 +6,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.database import connect_db, close_db
-from app.routes import suppliers, warehouses, transport, emissions, forecasting, recommendations, dashboard, auth, live_data, pdf_upload, maps, payments, excel_upload
+from app.routes import suppliers, warehouses, transport, emissions, forecasting, recommendations, dashboard, auth, live_data, pdf_upload, maps, payments, excel_upload, admin
 
 
 @asynccontextmanager
@@ -44,6 +44,7 @@ app.include_router(pdf_upload.router, prefix="/api/pdf", tags=["PDF Upload"])
 app.include_router(maps.router,     prefix="/api/maps",     tags=["Maps & Geocoding"])
 app.include_router(payments.router,      prefix="/api/payments",      tags=["Payments"])
 app.include_router(excel_upload.router,  prefix="/api/excel",          tags=["Excel Import"])
+app.include_router(admin.router,         prefix="/api/admin",           tags=["Admin"])
 
 
 @app.get("/api/health")

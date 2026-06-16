@@ -42,3 +42,13 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         return user_id
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid token")
+
+
+async def get_current_admin(user_id: str = Depends(get_current_user)):
+    from app.database import get_db
+    from bson import ObjectId
+    db = get_db()
+    user = await db.users.find_one({"_id": ObjectId(user_id)})
+    if not user or user.get("role") != "admin":
+        raise HTTPException(status_code=403, detail="Admin access required")
+    return user_id

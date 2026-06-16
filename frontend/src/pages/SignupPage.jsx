@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import {
   Leaf, ArrowRight, Loader2, Eye, EyeOff, Check,
   Map, TrendingUp, Zap, Shield, Star, Phone, MapPin, ChevronLeft,
+  Clock, Mail,
 } from 'lucide-react';
 
 /* ── Password strength ──────────────────────────────────────────── */
@@ -31,6 +32,8 @@ const PERKS = [
 export default function SignupPage() {
   const { register } = useAuth();
   const navigate     = useNavigate();
+
+  const [pendingEmail, setPendingEmail] = useState('');
 
   const [form, setForm] = useState({
     company_name:    '',
@@ -75,9 +78,15 @@ export default function SignupPage() {
     if (!validate()) return;
     setLoading(true);
     try {
-      await register(form.email, form.password, form.company_name, '', form.company_phone, form.company_address);
-      toast.success('Account created! Welcome to Chain scope AI.');
-      navigate('/app');
+      const result = await register(form.email, form.password, form.company_name, '', form.company_phone, form.company_address);
+      if (result.is_admin) {
+        // Admin email — auto-logged in
+        toast.success('Admin account created. Welcome!');
+        navigate('/admin');
+      } else {
+        // Regular user — show pending screen
+        setPendingEmail(result.email || form.email);
+      }
     } catch (err) {
       const detail = err.response?.data?.detail;
       if (typeof detail === 'string' && detail.toLowerCase().includes('email')) {
@@ -89,6 +98,42 @@ export default function SignupPage() {
       setLoading(false);
     }
   };
+
+  /* ── Pending approval screen ────────────────────────────────────── */
+  if (pendingEmail) {
+    return (
+      <div className="min-h-screen flex items-center justify-center relative overflow-hidden" style={{ background: '#0f1117' }}>
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div style={{ position: 'absolute', top: '20%', left: '30%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(20,209,94,0.07) 0%, transparent 70%)', filter: 'blur(60px)' }} />
+        </div>
+        <div className="relative z-10 w-full max-w-md mx-4 text-center">
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6"
+            style={{ background: 'linear-gradient(135deg, rgba(20,209,94,0.15) 0%, rgba(20,209,94,0.05) 100%)', border: '1px solid rgba(20,209,94,0.25)' }}>
+            <Clock className="w-10 h-10 text-echo-400" />
+          </div>
+          <h1 className="text-3xl font-black text-white mb-3">Account submitted</h1>
+          <p className="text-carbon-400 text-sm leading-relaxed mb-2">
+            Your account has been created and is awaiting admin approval.
+          </p>
+          <div className="flex items-center justify-center gap-2 mb-6 text-sm text-carbon-500">
+            <Mail className="w-4 h-4 text-echo-400/60" />
+            <span className="text-echo-400 font-medium">{pendingEmail}</span>
+          </div>
+          <div className="p-5 rounded-2xl border border-carbon-800 mb-6 text-left" style={{ background: 'rgba(255,255,255,0.02)' }}>
+            <p className="text-carbon-400 text-sm leading-relaxed">
+              Our team reviews new accounts within <strong className="text-white">1 business day</strong>. Once approved, you will be able to sign in and access the platform. If you have questions, contact us at{' '}
+              <a href="mailto:info@chainscopeai.co.uk" className="text-echo-400 hover:text-echo-300 transition-colors">info@chainscopeai.co.uk</a>.
+            </p>
+          </div>
+          <Link to="/login"
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02]"
+            style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)' }}>
+            Go to Sign In <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   /* ── Render ─────────────────────────────────────────────────────── */
   return (
@@ -313,10 +358,10 @@ export default function SignupPage() {
                   </div>
                 </div>
                 <span className="text-sm text-carbon-400 leading-snug">
-                  I agree to Chain scope AI's{' '}
-                  <button type="button" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Terms of Service</button>
+                  I agree to ChainscopeAI's{' '}
+                  <Link to="/terms" target="_blank" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Terms of Service</Link>
                   {' '}and{' '}
-                  <button type="button" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Privacy Policy</button>
+                  <Link to="/privacy" target="_blank" className="text-echo-400 hover:text-echo-300 underline underline-offset-2 transition-colors">Privacy Policy</Link>
                 </span>
               </label>
               {errors.agreed && <p className="mt-1.5 text-xs text-red-400">{errors.agreed}</p>}

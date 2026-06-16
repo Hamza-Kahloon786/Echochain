@@ -3,6 +3,7 @@ Seed script: Populates MongoDB with demo data for Chain scope AI.
 Run: python seed.py
 """
 import asyncio
+import os
 from motor.motor_asyncio import AsyncIOMotorClient
 from app.utils.auth import hash_password
 from app.utils.emission_factors import (
@@ -11,9 +12,12 @@ from app.utils.emission_factors import (
     calculate_route_emissions,
 )
 from datetime import datetime
+from dotenv import load_dotenv
 
-MONGODB_URL = "mongodb://localhost:27017"
-DATABASE_NAME = "Chain scope AI"
+load_dotenv()
+
+MONGODB_URL = os.getenv("MONGODB_URL", "mongodb://localhost:27017")
+DATABASE_NAME = os.getenv("DATABASE_NAME", "chain_scope_ai")
 
 DEMO_USER = {
     "email": "demo@Chain scope AI.uk",

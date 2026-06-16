@@ -1,25 +1,47 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
-import { Leaf, ArrowRight, Loader2, Eye, EyeOff, ChevronLeft } from 'lucide-react';
+import { Leaf, ArrowRight, Loader2, Eye, EyeOff, ChevronLeft, Clock, AlertCircle } from 'lucide-react';
 
 export default function LoginPage() {
-  const { login } = useAuth();
-  const [form,    setForm]    = useState({ email: '', password: '' });
-  const [showPw,  setShowPw]  = useState(false);
-  const [loading, setLoading] = useState(false);
+  const { login, isAdmin } = useAuth();
+  const navigate = useNavigate();
+  const [form,      setForm]      = useState({ email: '', password: '' });
+  const [showPw,    setShowPw]    = useState(false);
+  const [loading,   setLoading]   = useState(false);
+  const [blockMsg,  setBlockMsg]  = useState(''); // pending/inactive message
+  const [blockType, setBlockType] = useState(''); // 'pending' | 'inactive'
 
-  const set = (key) => (e) => setForm(f => ({ ...f, [key]: e.target.value }));
+  const set = (key) => (e) => {
+    setForm(f => ({ ...f, [key]: e.target.value }));
+    setBlockMsg('');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setBlockMsg('');
     setLoading(true);
     try {
-      await login(form.email, form.password);
+      const userData = await login(form.email, form.password);
       toast.success('Welcome back!');
+      // Navigate immediately based on role from the API response —
+      // don't rely on isAdmin state which may not have updated yet.
+      navigate(userData.role === 'admin' ? '/admin' : '/app', { replace: true });
     } catch (err) {
-      toast.error(err.response?.data?.detail || 'Invalid email or password.');
+      const status = err.response?.status;
+      const detail = err.response?.data?.detail || '';
+      if (status === 403) {
+        if (detail.toLowerCase().includes('pending')) {
+          setBlockType('pending');
+          setBlockMsg(detail);
+        } else {
+          setBlockType('inactive');
+          setBlockMsg(detail);
+        }
+      } else {
+        toast.error(detail || 'Invalid email or password.');
+      }
     } finally {
       setLoading(false);
     }
@@ -69,6 +91,19 @@ export default function LoginPage() {
             </p>
           </div>
 
+          {blockMsg && (
+            <div className={`mb-5 p-4 rounded-xl border flex items-start gap-3 text-sm ${
+              blockType === 'pending'
+                ? 'border-amber-500/25 bg-amber-500/8 text-amber-300'
+                : 'border-red-500/25 bg-red-500/8 text-red-300'
+            }`}>
+              {blockType === 'pending'
+                ? <Clock className="w-4 h-4 flex-shrink-0 mt-0.5 text-amber-400" />
+                : <AlertCircle className="w-4 h-4 flex-shrink-0 mt-0.5 text-red-400" />}
+              <span className="leading-relaxed">{blockMsg}</span>
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} noValidate className="space-y-4">
             <div>
               <label htmlFor="email" className="label">Email</label>
@@ -113,9 +148,9 @@ export default function LoginPage() {
 
         <p className="text-center text-xs text-carbon-600 mt-6">
           By signing in you agree to our{' '}
-          <button className="hover:text-carbon-400 underline underline-offset-2 transition-colors">Terms</button>
+          <Link to="/terms" className="hover:text-carbon-400 underline underline-offset-2 transition-colors">Terms</Link>
           {' '}and{' '}
-          <button className="hover:text-carbon-400 underline underline-offset-2 transition-colors">Privacy Policy</button>
+          <Link to="/privacy" className="hover:text-carbon-400 underline underline-offset-2 transition-colors">Privacy Policy</Link>
         </p>
       </div>
     </div>
