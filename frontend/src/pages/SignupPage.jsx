@@ -163,6 +163,7 @@ export default function SignupPage() {
             <Leaf className="w-5 h-5 text-white" />
           </div>
           <span className="text-xl font-bold text-white tracking-tight">Chain scope AI</span>
+          <span className="text-xl font-bold text-white tracking-tight">Chain scope AI</span>
         </Link>
 
         {/* Middle: headline + perks */}
@@ -176,6 +177,7 @@ export default function SignupPage() {
             <span className="text-echo-400">reaching Net Zero faster</span>
           </h2>
           <p className="text-carbon-400 text-base leading-relaxed mb-10">
+            Chain scope AI gives your sustainability team an AI-powered carbon intelligence platform — from hotspot detection to actionable reduction plans.
             Chain scope AI gives your sustainability team an AI-powered carbon intelligence platform — from hotspot detection to actionable reduction plans.
           </p>
           <ul className="space-y-4" aria-label="Platform features">
@@ -217,6 +219,7 @@ export default function SignupPage() {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-echo-500 to-echo-700 flex items-center justify-center">
               <Leaf className="w-5 h-5 text-white" />
             </div>
+            <span className="text-lg font-bold text-white tracking-tight">Chain scope AI</span>
             <span className="text-lg font-bold text-white tracking-tight">Chain scope AI</span>
           </Link>
 

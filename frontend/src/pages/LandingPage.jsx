@@ -56,6 +56,7 @@ const ICON_STYLE = {
 
 const TESTIMONIALS = [
   { quote: "Chain scope AI flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
+  { quote: "Chain scope AI flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
   { quote: "The forecasting engine is genuinely impressive. We now model the carbon impact of a supplier swap before committing — that's never been possible before.", name: 'James Clifton', role: 'Supply Chain Director, NovaTech UK',          img: 'https://picsum.photos/id/1012/100/100' },
   { quote: "Setup took 20 minutes. Within a week we had a full heatmap of our UK operations. The AI recommendations alone justified the subscription in month one.",   name: 'Rachel Torres', role: 'ESG Officer, LayerStack',                     img: 'https://picsum.photos/id/1027/100/100' },
   { quote: "Live grid intensity scheduling cut our electricity-related emissions by 22% — we didn't change a single process, just shifted the timing.",               name: 'David Okafor',  role: 'Operations Manager, ClearPath Logistics',    img: 'https://picsum.photos/id/1074/100/100' },
