@@ -22,7 +22,6 @@ export function AuthProvider({ children }) {
   // Validate stored token on mount
   useEffect(() => {
     const stored = localStorage.getItem('Chain scope AI_token');
-    const stored = localStorage.getItem('Chain scope AI_token');
     if (!stored) { setLoading(false); return; }
     fetchMe().finally(() => setLoading(false));
   }, [fetchMe]);
@@ -30,7 +29,6 @@ export function AuthProvider({ children }) {
   const login = async (email, password) => {
     const res = await api.post('/auth/login', { email, password });
     const t = res.data.access_token;
-    localStorage.setItem('Chain scope AI_token', t);
     localStorage.setItem('Chain scope AI_token', t);
     setToken(t);
     // Fetch full user profile (includes role) and return it so callers
@@ -57,7 +55,6 @@ export function AuthProvider({ children }) {
   };
 
   const logout = () => {
-    localStorage.removeItem('Chain scope AI_token');
     localStorage.removeItem('Chain scope AI_token');
     setToken(null);
     setUser(null);
