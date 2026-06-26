@@ -362,14 +362,14 @@ function BlogFooter() {
           </div>
           <div className="space-y-1">
             <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-            <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk</p>
+            <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com</p>
           </div>
           <div className="flex items-center gap-3">
             <a href="https://linkedin.com/company/chainscopeai" target="_blank" rel="noreferrer"
               className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
               <Linkedin className="w-3.5 h-3.5" />
             </a>
-            <a href="mailto:info@chainscopeai.co.uk"
+            <a href="mailto:Info@chainscopeai.com"
               className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
               <Mail className="w-3.5 h-3.5" />
             </a>
@@ -425,8 +425,8 @@ function BlogListing({ navigate }) {
                 style={{ background: '#13151f' }}
               >
                 {/* Top colour strip */}
-                <div className="relative h-64 overflow-hidden">
-                  <img src="/logo-carbon-340x250.webp" alt="ChainscopeAI" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="relative h-64 overflow-hidden bg-white">
+                  <img src="/favicon.svg" alt="ChainscopeAI" className="w-full h-full object-cover" />
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
@@ -463,7 +463,7 @@ function BlogListing({ navigate }) {
               style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)' }}>
               Start Free Trial <ArrowRight className="w-4 h-4" />
             </button>
-            <a href="mailto:info@chainscopeai.co.uk?subject=Discovery%20Call%20Request"
+            <a href="mailto:Info@chainscopeai.com?subject=Discovery%20Call%20Request"
               className="flex items-center gap-2 px-7 py-3 rounded-xl text-sm font-semibold text-carbon-300 hover:text-white transition-all duration-200"
               style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}>
               <Calendar className="w-4 h-4" /> Book a Discovery Call

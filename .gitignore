@@ -3,8 +3,6 @@
 # ══════════════════════════════════════════════════
 
 # ── Environment / secrets ─────────────────────────
-.env
-.env.*
 !.env.example
 !backend/.env.example
 !frontend/.env.example
@@ -78,7 +76,6 @@ generated_reports/
 
 # ── IDE / OS ──────────────────────────────────────
 .idea/
-.vscode/
 *.swp
 *.swo
 .DS_Store
@@ -88,3 +85,6 @@ Thumbs.db
 *.local
 temp_auto_push.bat
 temp_interactive_push.bat
+branch_structure.json
+config.bat
+node_modules

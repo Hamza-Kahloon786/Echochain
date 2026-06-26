@@ -172,7 +172,7 @@ export default function AboutPage() {
                     className="w-9 h-9 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 hover:bg-echo-500/10 transition-all duration-200">
                     <Linkedin className="w-4 h-4" />
                   </a>
-                  <a href="mailto:info@chainscopeai.co.uk"
+                  <a href="mailto:Info@chainscopeai.com"
                     className="w-9 h-9 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 hover:bg-echo-500/10 transition-all duration-200">
                     <Mail className="w-4 h-4" />
                   </a>
@@ -262,7 +262,7 @@ export default function AboutPage() {
                   style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)', boxShadow: '0 0 20px rgba(20,209,94,0.25)' }}>
                   Start Free Trial <ArrowRight className="w-4 h-4" />
                 </button>
-                <a href="mailto:info@chainscopeai.co.uk"
+                <a href="mailto:Info@chainscopeai.com"
                   className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-carbon-300 hover:text-white transition-all duration-200"
                   style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}>
                   <Mail className="w-4 h-4" /> Contact Us
@@ -285,14 +285,14 @@ export default function AboutPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com</p>
             </div>
             <div className="flex items-center gap-3">
               <a href="https://linkedin.com/company/chainscopeai" target="_blank" rel="noreferrer"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
-              <a href="mailto:info@chainscopeai.co.uk"
+              <a href="mailto:Info@chainscopeai.com"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Mail className="w-3.5 h-3.5" />
               </a>
