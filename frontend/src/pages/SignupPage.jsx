@@ -122,7 +122,7 @@ export default function SignupPage() {
           <div className="p-5 rounded-2xl border border-carbon-800 mb-6 text-left" style={{ background: 'rgba(255,255,255,0.02)' }}>
             <p className="text-carbon-400 text-sm leading-relaxed">
               Our team reviews new accounts within <strong className="text-white">1 business day</strong>. Once approved, you will be able to sign in and access the platform. If you have questions, contact us at{' '}
-              <a href="mailto:info@chainscopeai.co.uk" className="text-echo-400 hover:text-echo-300 transition-colors">info@chainscopeai.co.uk</a>.
+              <a href="mailto:Info@chainscopeai.com" className="text-echo-400 hover:text-echo-300 transition-colors">Info@chainscopeai.com</a>.
             </p>
           </div>
           <Link to="/login"

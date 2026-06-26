@@ -225,7 +225,7 @@ export default function PricingPage() {
                 </div>
                 <p className="text-xs text-carbon-500 mt-1">No credit card required</p>
               </div>
-              <a href="mailto:info@chainscopeai.co.uk?subject=Demo%20Request"
+              <a href="mailto:Info@chainscopeai.com?subject=Demo%20Request"
                 className="w-full flex items-center justify-center gap-2 py-3 mb-7 rounded-xl text-sm font-semibold text-carbon-300 hover:text-white transition-all duration-200"
                 style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}>
                 <Calendar className="w-4 h-4" /> Book a Demo
@@ -322,7 +322,7 @@ export default function PricingPage() {
                 </div>
                 <p className="text-xs text-carbon-500 mt-1">Contact us for a quote</p>
               </div>
-              <a href="mailto:info@chainscopeai.co.uk?subject=Enterprise%20Enquiry"
+              <a href="mailto:Info@chainscopeai.com?subject=Enterprise%20Enquiry"
                 className="w-full flex items-center justify-center gap-2 py-3 mb-7 rounded-xl text-sm font-semibold text-carbon-300 hover:text-white transition-all duration-200"
                 style={{ border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}>
                 Contact Us <ArrowRight className="w-4 h-4" />
@@ -400,7 +400,7 @@ export default function PricingPage() {
                     </td>
                     <td className="py-4 px-6 text-right">
                       {svc.price === 'Contact us' ? (
-                        <a href="mailto:info@chainscopeai.co.uk?subject=Enterprise%20Tech%20Services%20Enquiry"
+                        <a href="mailto:Info@chainscopeai.com?subject=Enterprise%20Tech%20Services%20Enquiry"
                           className="text-echo-400 hover:text-echo-300 font-semibold text-sm transition-colors">
                           Contact us
                         </a>
@@ -452,7 +452,7 @@ export default function PricingPage() {
             Book a free 30-minute discovery call. We will recommend the right option — software, tech services, or both.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <a href="mailto:info@chainscopeai.co.uk?subject=Discovery%20Call%20Request"
+            <a href="mailto:Info@chainscopeai.com?subject=Discovery%20Call%20Request"
               className="flex items-center gap-2 px-9 py-4 rounded-xl text-base font-semibold text-white transition-all duration-200 hover:scale-[1.02]"
               style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)', boxShadow: '0 0 30px rgba(20,209,94,0.25)' }}>
               <Calendar className="w-4 h-4" /> Book a Free Discovery Call
@@ -464,8 +464,8 @@ export default function PricingPage() {
             </button>
           </div>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-5 text-sm text-carbon-500">
-            <a href="mailto:info@chainscopeai.co.uk" className="flex items-center gap-2 hover:text-carbon-300 transition-colors">
-              <Mail className="w-4 h-4" /> info@chainscopeai.co.uk
+            <a href="mailto:Info@chainscopeai.com" className="flex items-center gap-2 hover:text-carbon-300 transition-colors">
+              <Mail className="w-4 h-4" /> Info@chainscopeai.com
             </a>
             <a href="tel:+447448781708" className="flex items-center gap-2 hover:text-carbon-300 transition-colors">
               <Phone className="w-4 h-4" /> +44 7448 781708
@@ -486,14 +486,14 @@ export default function PricingPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk &nbsp;|&nbsp; +44 7448 781708</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com &nbsp;|&nbsp; +44 7448 781708</p>
             </div>
             <div className="flex items-center gap-3">
               <a href="https://linkedin.com/company/chainscopeai" target="_blank" rel="noreferrer"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
-              <a href="mailto:info@chainscopeai.co.uk"
+              <a href="mailto:Info@chainscopeai.com"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Mail className="w-3.5 h-3.5" />
               </a>
