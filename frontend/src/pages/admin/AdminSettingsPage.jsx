@@ -64,7 +64,7 @@ export default function AdminSettingsPage() {
         <SettingRow label="Company Name"  value="Chainscope AI Ltd" sub="Registered legal name" />
         <SettingRow label="Company No."   value="17256706"           sub="Registered in England and Wales" />
         <SettingRow label="Registered Office" value="Worcester, United Kingdom" />
-        <SettingRow label="Contact Email" value="info@chainscopeai.co.uk" />
+        <SettingRow label="Contact Email" value="Info@chainscopeai.com" />
         <SettingRow label="Contact Phone" value="+44 7448 781708" />
       </div>
 
