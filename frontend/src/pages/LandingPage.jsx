@@ -54,15 +54,6 @@ const ICON_STYLE = {
   rose:   { wrap: 'bg-rose-500/15',   icon: 'text-rose-400'   },
 };
 
-const TESTIMONIALS = [
-  { quote: "Chain scope AI flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
-  { quote: "Chain scope AI flagged three warehouse sites we hadn't even identified in our manual audit. We redirected those savings into 11 new renewable energy contracts.", name: 'Priya Sharma',  role: 'Head of Sustainability, PulseGroup',         img: 'https://picsum.photos/id/1025/100/100' },
-  { quote: "The forecasting engine is genuinely impressive. We now model the carbon impact of a supplier swap before committing — that's never been possible before.", name: 'James Clifton', role: 'Supply Chain Director, NovaTech UK',          img: 'https://picsum.photos/id/1012/100/100' },
-  { quote: "Setup took 20 minutes. Within a week we had a full heatmap of our UK operations. The AI recommendations alone justified the subscription in month one.",   name: 'Rachel Torres', role: 'ESG Officer, LayerStack',                     img: 'https://picsum.photos/id/1027/100/100' },
-  { quote: "Live grid intensity scheduling cut our electricity-related emissions by 22% — we didn't change a single process, just shifted the timing.",               name: 'David Okafor',  role: 'Operations Manager, ClearPath Logistics',    img: 'https://picsum.photos/id/1074/100/100' },
-  { quote: "Our investors now ask for Chain scope AI reports directly. It's become the standard for how we communicate carbon performance across the board.",              name: 'Emma Walsh',    role: 'CEO, Apex Green Manufacturing',              img: 'https://picsum.photos/id/1062/100/100' },
-];
-
 const TW_PHRASES = ['Identify carbon hotspots in minutes', 'Forecast emissions up to 12 months ahead', 'Get AI-ranked reduction actions', 'Track Scope 1, 2 & 3 in one place'];
 
 /* ── Component ──────────────────────────────────────────────────── */
@@ -75,8 +66,6 @@ export default function LandingPage() {
   const [mobileOpen,    setMobileOpen]    = useState(false);
   const [showBtt,       setShowBtt]       = useState(false);
   const [twText,        setTwText]        = useState('');
-  const [slide,         setSlide]         = useState(0);
-  const [visCount,      setVisCount]      = useState(3);
   const [newsEmail,     setNewsEmail]     = useState('');
   const [newsState,     setNewsState]     = useState('idle'); // idle|loading|ok|err
 
@@ -116,20 +105,6 @@ export default function LandingPage() {
     document.querySelectorAll('.lp-animate, .lp-animate-left, .lp-animate-right').forEach(el => io.observe(el));
     return () => io.disconnect();
   }, []);
-
-  /* ── Carousel ────────────────────────────────────────────────────── */
-  useEffect(() => {
-    const update = () => setVisCount(window.innerWidth < 768 ? 1 : window.innerWidth < 1024 ? 2 : 3);
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
-
-  const maxSlide = Math.max(0, TESTIMONIALS.length - visCount);
-  useEffect(() => {
-    const t = setInterval(() => setSlide(s => (s >= maxSlide ? 0 : s + 1)), 5000);
-    return () => clearInterval(t);
-  }, [maxSlide]);
 
   /* ── Newsletter ──────────────────────────────────────────────────── */
   const handleNewsletter = (e) => {
@@ -292,23 +267,6 @@ export default function LandingPage() {
               <Play className="w-3.5 h-3.5 text-echo-400" /> Book a Free Discovery Call
             </button>
           </div>
-
-          {/* Trust bar */}
-          <div className="flex items-center justify-center gap-x-5 gap-y-2.5 flex-wrap text-[11px] text-carbon-500 font-medium">
-            {[
-              'DEFRA 2024 Compliant',
-              'ISO 27001 Certified',
-              'GDPR Compliant',
-              'Chainscope AI Ltd Reg. No. 17256706',
-              'Built on IEEE Research',
-              'Active UK Industry Pilots',
-            ].map((item) => (
-              <span key={item} className="flex items-center gap-1.5">
-                <Check className="w-3 h-3 text-echo-500 flex-shrink-0" />
-                {item}
-              </span>
-            ))}
-          </div>
         </div>
 
 
@@ -317,43 +275,6 @@ export default function LandingPage() {
           <div className="w-px h-8 bg-gradient-to-b from-transparent via-echo-700 to-transparent animate-pulse" />
         </div>
       </section>
-
-      {/* ──────────────────── CLIENTS ──────────────────── */}
-      <div className="border-t border-b border-carbon-800/60 py-12">
-        <div className="max-w-6xl mx-auto px-6">
-          <p className="text-center text-[11px] font-semibold tracking-[0.14em] uppercase text-carbon-500 mb-8">
-            Trusted by UK sustainability leaders
-          </p>
-          <style>{`
-            @keyframes scroll {
-              0% { transform: translateX(0); }
-              100% { transform: translateX(-50%); }
-            }
-            .auto-scroll {
-              animation: scroll 40s linear infinite;
-              width: 200%;
-            }
-            .auto-scroll:hover {
-              animation-play-state: paused;
-            }
-          `}</style>
-          <div className="overflow-hidden" role="list">
-            <div className="flex items-center gap-6 auto-scroll">
-              {[...Array(2)].map((_, idx) => (
-                <div key={`set-${idx}`} className="flex items-center gap-6 whitespace-nowrap">
-                  {['NHS Supply Chain','Network Rail','DHL UK','Marks & Spencer','Tesco','Government Digital Service','British Retail Consortium','Environment Agency'].map(name => (
-                    <div key={`${name}-${idx}`} role="listitem"
-                      className="px-7 py-3.5 rounded-xl bg-carbon-900/70 border border-carbon-800 text-white text-sm font-semibold tracking-tight backdrop-blur-sm hover:text-echo-400 hover:border-carbon-700 transition-all duration-300 hover:-translate-y-0.5 cursor-default flex-shrink-0 inline-block"
-                    >
-                      {name}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* ──────────────────── PROBLEM ──────────────────── */}
       <section id="problem" className="py-24 md:py-32 border-t border-carbon-800/40">
@@ -578,8 +499,8 @@ export default function LandingPage() {
                 style={{ background: '#13151f' }}
               >
                 {/* Top strip */}
-                <div className="relative h-64 overflow-hidden">
-                  <img src="/logo-carbon-340x250.webp" alt="ChainscopeAI" className="absolute inset-0 w-full h-full object-cover" />
+                <div className="relative h-64 overflow-hidden bg-white">
+                  <img src="/favicon.svg" alt="ChainscopeAI" className="w-full h-full object-cover" />
                 </div>
 
                 <div className="p-6 flex flex-col flex-1">
@@ -671,72 +592,6 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ──────────────────── TESTIMONIALS ──────────────────── */}
-      <section id="testimonials" className="py-24 md:py-32 border-t border-carbon-800/40" style={{ background: 'linear-gradient(180deg, transparent 0%, rgba(39,39,51,0.2) 50%, transparent 100%)' }}>
-        <div className="max-w-7xl mx-auto px-6">
-
-          <div className="text-center mb-14 lp-animate">
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-echo-500/25 bg-echo-500/8 text-echo-400 text-xs font-semibold tracking-widest uppercase mb-5">
-              <Star className="w-3 h-3" /> Customer Stories
-            </span>
-            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-white leading-tight">
-              Loved by sustainability<br />
-              <span className="text-echo-400">professionals across the UK</span>
-            </h2>
-          </div>
-
-          {/* Track */}
-          <div className="overflow-hidden" aria-label="Customer testimonials">
-            <div
-              className="flex gap-5 transition-transform duration-500"
-              style={{ transform: `translateX(calc(-${slide} * (${100 / visCount}% + ${visCount > 1 ? 20 / visCount : 20}px)))` }}
-              role="list"
-            >
-              {TESTIMONIALS.map((t) => (
-                <div key={t.name} role="listitem"
-                  className="flex-shrink-0 p-7 rounded-2xl bg-carbon-900/70 border border-carbon-800 backdrop-blur-sm transition-all duration-300 hover:border-carbon-700 hover:-translate-y-1 hover:shadow-2xl hover:shadow-black/40"
-                  style={{ width: `calc(${100 / visCount}% - ${visCount > 1 ? 20 * (visCount - 1) / visCount : 0}px)` }}
-                >
-                  {/* Stars */}
-                  <div className="flex gap-1 mb-4" aria-label="5 stars">
-                    {Array(5).fill(0).map((_, si) => <Star key={si} className="w-4 h-4 fill-amber-400 text-amber-400" aria-hidden="true" />)}
-                  </div>
-                  <p className="text-sm text-carbon-300 leading-[1.8] italic mb-6">"{t.quote}"</p>
-                  <div className="flex items-center gap-3 pt-5 border-t border-carbon-800">
-                    <img src={t.img} alt={t.name} className="w-11 h-11 rounded-full object-cover border-2 border-carbon-700" loading="lazy" />
-                    <div>
-                      <div className="text-sm font-bold text-white">{t.name}</div>
-                      <div className="text-xs text-carbon-500 mt-0.5">{t.role}</div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="flex items-center justify-center gap-4 mt-10">
-            <button onClick={() => setSlide(s => Math.max(0, s - 1))} disabled={slide === 0}
-              className="w-10 h-10 rounded-full border border-carbon-700 bg-carbon-900/70 text-carbon-400 hover:border-echo-500/50 hover:text-echo-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center"
-              aria-label="Previous testimonials">
-              <ChevronLeft className="w-4 h-4" />
-            </button>
-            <div className="flex gap-2" role="tablist" aria-label="Testimonial navigation">
-              {Array(maxSlide + 1).fill(0).map((_, i) => (
-                <button key={i} onClick={() => setSlide(i)} role="tab" aria-selected={i === slide} aria-label={`Go to group ${i + 1}`}
-                  className={`rounded-full transition-all duration-300 ${i === slide ? 'bg-echo-500 w-6 h-2' : 'bg-carbon-700 hover:bg-carbon-500 w-2 h-2'}`}
-                />
-              ))}
-            </div>
-            <button onClick={() => setSlide(s => Math.min(maxSlide, s + 1))} disabled={slide === maxSlide}
-              className="w-10 h-10 rounded-full border border-carbon-700 bg-carbon-900/70 text-carbon-400 hover:border-echo-500/50 hover:text-echo-400 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 flex items-center justify-center"
-              aria-label="Next testimonials">
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </section>
-
       {/* ──────────────────── CTA BANNER ──────────────────── */}
       <section id="contact" className="relative py-24 md:py-32 overflow-hidden border-t border-carbon-800/40">
         <div className="absolute inset-0 animate-pulse" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 50%, rgba(20,209,94,0.08) 0%, transparent 70%)', animationDuration: '6s' }} aria-hidden="true" />
@@ -791,7 +646,7 @@ export default function LandingPage() {
               <div className="space-y-2 text-xs text-carbon-500">
                 <div className="flex items-center gap-2">
                   <Mail className="w-3.5 h-3.5 text-carbon-600 flex-shrink-0" />
-                  <a href="mailto:info@chainscopeai.co.uk" className="hover:text-carbon-300 transition-colors">info@chainscopeai.co.uk</a>
+                  <a href="mailto:Info@chainscopeai.com" className="hover:text-carbon-300 transition-colors">Info@chainscopeai.com</a>
                 </div>
                 <div className="flex items-center gap-2">
                   <Globe className="w-3.5 h-3.5 text-carbon-600 flex-shrink-0" />

@@ -212,7 +212,7 @@ export default function TermsPage() {
               <UL items={[
                 'Maintaining the confidentiality of your account credentials.',
                 'All activity that occurs under your account.',
-                'Notifying us immediately at info@chainscopeai.co.uk if you suspect unauthorised access to your account.',
+                'Notifying us immediately at Info@chainscopeai.com if you suspect unauthorised access to your account.',
                 'Ensuring all information you provide is accurate and kept up to date.',
               ]} />
               <P>We reserve the right to suspend or terminate any account that we reasonably believe has been compromised, is being used fraudulently, or is in breach of these Terms.</P>
@@ -223,7 +223,7 @@ export default function TermsPage() {
               <UL items={[
                 'Demo Plan: Free, with limited features.',
                 'Starter Plan: £49 per month (billed monthly) or £499 per year (billed annually).',
-                'Enterprise Plan: Custom pricing — contact info@chainscopeai.co.uk.',
+                'Enterprise Plan: Custom pricing — contact Info@chainscopeai.com.',
               ]} />
               <P>All payments are processed securely by Stripe. By subscribing, you authorise us to charge your payment method on a recurring basis. Prices shown are exclusive of VAT where applicable.</P>
               <P>Subscriptions automatically renew at the end of each billing period unless cancelled. You may cancel your Subscription at any time from your account settings; cancellation takes effect at the end of the current billing period and no partial refunds are issued for unused time.</P>
@@ -286,7 +286,7 @@ export default function TermsPage() {
             </Section>
 
             <Section id="termination" title="12. Termination">
-              <P>You may terminate your account at any time by contacting us at info@chainscopeai.co.uk or via your account settings. Upon termination, your access to paid features will cease at the end of your current billing period.</P>
+              <P>You may terminate your account at any time by contacting us at Info@chainscopeai.com or via your account settings. Upon termination, your access to paid features will cease at the end of your current billing period.</P>
               <P>We may terminate or suspend your account immediately, without notice, if we believe you have materially breached these Terms, engaged in fraudulent activity, or if required to do so by law.</P>
               <P>On termination, we will retain your data for 30 days to allow for data export, after which it may be deleted in accordance with our data retention policy. You are responsible for exporting any data you wish to retain before termination.</P>
             </Section>
@@ -304,7 +304,7 @@ export default function TermsPage() {
             <Section id="contact" title="15. Contact Us">
               <P>If you have any questions about these Terms, please contact us:</P>
               <UL items={[
-                'Email: info@chainscopeai.co.uk',
+                'Email: Info@chainscopeai.com',
                 'Phone: +44 7448 781708',
                 'Post: Chainscope AI Ltd, Worcester, United Kingdom',
                 'Company No: 17256706 — Registered in England and Wales',
@@ -337,10 +337,10 @@ export default function TermsPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com</p>
             </div>
             <div className="flex items-center gap-3">
-              {[['https://linkedin.com/company/chainscopeai', Linkedin], ['mailto:info@chainscopeai.co.uk', Mail], ['https://chainscopeai.com', Globe]].map(([href, Icon]) => (
+              {[['https://linkedin.com/company/chainscopeai', Linkedin], ['mailto:Info@chainscopeai.com', Mail], ['https://chainscopeai.com', Globe]].map(([href, Icon]) => (
                 <a key={href} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
                   className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                   <Icon className="w-3.5 h-3.5" />
