@@ -336,8 +336,8 @@ export default function TechServicesPage() {
                     {/* CTA */}
                     <a
                       href={pkg.price === 'Custom'
-                        ? 'mailto:info@chainscopeai.co.uk?subject=Enterprise%20Enquiry'
-                        : `mailto:info@chainscopeai.co.uk?subject=${encodeURIComponent(pkg.title + ' Enquiry')}`}
+                        ? 'mailto:Info@chainscopeai.com?subject=Enterprise%20Enquiry'
+                        : `mailto:Info@chainscopeai.com?subject=${encodeURIComponent(pkg.title + ' Enquiry')}`}
                       className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-200 ${
                         pkg.highlight
                           ? 'text-white hover:scale-[1.02]'
@@ -377,7 +377,7 @@ export default function TechServicesPage() {
           </p>
 
           <a
-            href="mailto:info@chainscopeai.co.uk?subject=Free%20Discovery%20Call%20Request"
+            href="mailto:Info@chainscopeai.com?subject=Free%20Discovery%20Call%20Request"
             className="inline-flex items-center gap-2 px-10 py-4 rounded-xl text-base font-semibold text-white transition-all duration-200 hover:scale-[1.02] mb-10"
             style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)', boxShadow: '0 0 30px rgba(20,209,94,0.3)' }}
           >
@@ -386,12 +386,12 @@ export default function TechServicesPage() {
 
           {/* Contact details */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 pt-8 border-t border-carbon-800">
-            <a href="mailto:info@chainscopeai.co.uk"
+            <a href="mailto:Info@chainscopeai.com"
               className="flex items-center gap-2.5 text-sm text-carbon-400 hover:text-carbon-200 transition-colors group">
               <div className="w-9 h-9 rounded-xl bg-carbon-800 border border-carbon-700 flex items-center justify-center group-hover:border-echo-500/40 group-hover:bg-echo-500/10 transition-all duration-200">
                 <Mail className="w-4 h-4 text-carbon-500 group-hover:text-echo-400 transition-colors" />
               </div>
-              info@chainscopeai.co.uk
+              Info@chainscopeai.com
             </a>
             <a href="tel:+447448781708"
               className="flex items-center gap-2.5 text-sm text-carbon-400 hover:text-carbon-200 transition-colors group">
@@ -416,14 +416,14 @@ export default function TechServicesPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk &nbsp;|&nbsp; +44 7448 781708</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com &nbsp;|&nbsp; +44 7448 781708</p>
             </div>
             <div className="flex items-center gap-3">
               <a href="https://linkedin.com/company/chainscopeai" target="_blank" rel="noreferrer"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
-              <a href="mailto:info@chainscopeai.co.uk"
+              <a href="mailto:Info@chainscopeai.com"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Mail className="w-3.5 h-3.5" />
               </a>

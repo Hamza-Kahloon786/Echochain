@@ -25,7 +25,7 @@ const ENQUIRY_TYPES = [
 ];
 
 const CONTACT_DETAILS = [
-  { Icon: Mail,      label: 'Email',             value: 'info@chainscopeai.co.uk',           href: 'mailto:info@chainscopeai.co.uk' },
+  { Icon: Mail,      label: 'Email',             value: 'Info@chainscopeai.com',           href: 'mailto:Info@chainscopeai.com' },
   { Icon: Phone,     label: 'Phone',             value: '+44 7448 781708',                    href: 'tel:+447448781708' },
   { Icon: Linkedin,  label: 'LinkedIn',          value: 'linkedin.com/company/chainscopeai', href: 'https://linkedin.com/company/chainscopeai' },
   { Icon: MapPin,    label: 'Registered Office', value: 'Worcester, United Kingdom',         href: null },
@@ -164,14 +164,11 @@ export default function ContactPage() {
             <Mail className="w-3 h-3" /> Get in Touch
           </span>
           <h1 className="text-4xl md:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.1] text-white mb-5">
-            Get in touch — we would
-            <br />
-            <span style={{ background: 'linear-gradient(135deg, #14d15e 0%, #34d399 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-              love to hear from you
-            </span>
+            Muhammad Hamza Tariq
           </h1>
-          <p className="text-carbon-400 text-lg max-w-2xl mx-auto leading-relaxed">
-            Whether you want to start a free trial, explore enterprise options, or simply ask a question — our team responds to every message, usually within one business day.
+          <p className="text-carbon-400 text-lg max-w-4xl mx-auto leading-relaxed">
+            As the Founder of ChainScope AI, I'm building AI solutions that simplify carbon management and environmental compliance for organisations worldwide.<br />
+            I welcome collaborations with industry and academia to drive meaningful climate impact.
           </p>
         </div>
       </section>
@@ -250,7 +247,7 @@ export default function ContactPage() {
                         <label className="block text-xs font-semibold text-carbon-400 mb-2">Email Address *</label>
                         <input
                           type="email"
-                          placeholder="info@chainscopeai.co.uk"
+                          placeholder="Info@chainscopeai.com"
                           value={form.email}
                           onChange={set('email')}
                           onBlur={() => setTouched(p => ({ ...p, email: true }))}
@@ -387,7 +384,7 @@ export default function ContactPage() {
                 <p className="text-carbon-400 text-xs leading-relaxed mb-5">
                   Ready to take control of your carbon emissions? Book a free 30-minute call and we will recommend the best solution for your business — whether that is our self-service platform or our fully managed tech services.
                 </p>
-                <a href="mailto:info@chainscopeai.co.uk?subject=Discovery%20Call%20Request&body=Hi%20Chainscope%20AI%20team%2C%0A%0AI%20would%20like%20to%20book%20a%20free%2030-minute%20discovery%20call.%0A%0AName%3A%0ACompany%3A%0AAvailability%3A"
+                <a href="mailto:Info@chainscopeai.com?subject=Discovery%20Call%20Request&body=Hi%20Chainscope%20AI%20team%2C%0A%0AI%20would%20like%20to%20book%20a%20free%2030-minute%20discovery%20call.%0A%0AName%3A%0ACompany%3A%0AAvailability%3A"
                   className="flex w-full items-center justify-center gap-2 py-3 rounded-xl text-sm font-semibold text-white transition-all duration-200 hover:scale-[1.02]"
                   style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)' }}>
                   <Calendar className="w-4 h-4" /> Book a Free Discovery Call
@@ -422,7 +419,7 @@ export default function ContactPage() {
                 </p>
               </div>
               <div className="flex flex-col gap-3 min-w-[200px]">
-                <a href="mailto:info@chainscopeai.co.uk?subject=Discovery%20Call%20Request"
+                <a href="mailto:Info@chainscopeai.com?subject=Discovery%20Call%20Request"
                   className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-xl text-sm font-semibold text-white whitespace-nowrap transition-all duration-200 hover:scale-[1.02]"
                   style={{ background: 'linear-gradient(135deg, #14d15e 0%, #09ad4a 100%)' }}>
                   <Calendar className="w-4 h-4" /> Book a Free Discovery Call
@@ -450,14 +447,14 @@ export default function ContactPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com</p>
             </div>
             <div className="flex items-center gap-3">
               <a href="https://linkedin.com/company/chainscopeai" target="_blank" rel="noreferrer"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Linkedin className="w-3.5 h-3.5" />
               </a>
-              <a href="mailto:info@chainscopeai.co.uk"
+              <a href="mailto:Info@chainscopeai.com"
                 className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                 <Mail className="w-3.5 h-3.5" />
               </a>
