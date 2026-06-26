@@ -203,7 +203,7 @@ export default function PrivacyPage() {
                 <p>Company No. 17256706</p>
                 <p>Registered in England and Wales</p>
                 <p>Registered Office: Worcester, United Kingdom</p>
-                <p>Email: <a href="mailto:info@chainscopeai.co.uk" className="text-echo-400 hover:text-echo-300 transition-colors">info@chainscopeai.co.uk</a></p>
+                <p>Email: <a href="mailto:Info@chainscopeai.com" className="text-echo-400 hover:text-echo-300 transition-colors">Info@chainscopeai.com</a></p>
                 <p>Phone: +44 7448 781708</p>
               </div>
               <P>For data protection enquiries, please contact us at the email address above with "Data Protection" in the subject line.</P>
@@ -285,7 +285,7 @@ export default function PrivacyPage() {
                 'Support correspondence: retained for 3 years.',
                 'Usage logs: retained for 12 months.',
               ]} />
-              <P>You may request earlier deletion of your data, subject to our legal obligations to retain certain records. Contact us at info@chainscopeai.co.uk to make a deletion request.</P>
+              <P>You may request earlier deletion of your data, subject to our legal obligations to retain certain records. Contact us at Info@chainscopeai.com to make a deletion request.</P>
             </Section>
 
             <Section id="your-rights" title="8. Your Rights Under UK GDPR">
@@ -299,7 +299,7 @@ export default function PrivacyPage() {
                 'Right to object — you may object to processing based on legitimate interests or for direct marketing.',
                 'Rights related to automated decision-making — we do not make solely automated decisions with legal or similarly significant effects on individuals.',
               ]} />
-              <P>To exercise any of these rights, please contact us at info@chainscopeai.co.uk. We will respond within one calendar month. There is no charge for most requests, unless they are manifestly unfounded or excessive.</P>
+              <P>To exercise any of these rights, please contact us at Info@chainscopeai.com. We will respond within one calendar month. There is no charge for most requests, unless they are manifestly unfounded or excessive.</P>
             </Section>
 
             <Section id="cookies" title="9. Cookies">
@@ -342,7 +342,7 @@ export default function PrivacyPage() {
               <P>If you have any questions or concerns about this Privacy Policy or how we handle your data, please contact us:</P>
               <div className="p-5 rounded-xl border border-carbon-800 bg-carbon-900/40 text-sm space-y-1">
                 <p className="text-white font-semibold">Chainscope AI Ltd — Data Protection Contact</p>
-                <p>Email: <a href="mailto:info@chainscopeai.co.uk" className="text-echo-400 hover:text-echo-300 transition-colors">info@chainscopeai.co.uk</a></p>
+                <p>Email: <a href="mailto:Info@chainscopeai.com" className="text-echo-400 hover:text-echo-300 transition-colors">Info@chainscopeai.com</a></p>
                 <p>Phone: +44 7448 781708</p>
                 <p>Post: Chainscope AI Ltd, Worcester, United Kingdom</p>
               </div>
@@ -382,10 +382,10 @@ export default function PrivacyPage() {
             </div>
             <div className="space-y-1">
               <p>Chainscope AI Ltd — Company No. 17256706 — Registered in England and Wales</p>
-              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; info@chainscopeai.co.uk</p>
+              <p>Registered Office: Worcester, United Kingdom &nbsp;|&nbsp; Info@chainscopeai.com</p>
             </div>
             <div className="flex items-center gap-3">
-              {[['https://linkedin.com/company/chainscopeai', Linkedin], ['mailto:info@chainscopeai.co.uk', Mail], ['https://chainscopeai.com', Globe]].map(([href, Icon]) => (
+              {[['https://linkedin.com/company/chainscopeai', Linkedin], ['mailto:Info@chainscopeai.com', Mail], ['https://chainscopeai.com', Globe]].map(([href, Icon]) => (
                 <a key={href} href={href} target={href.startsWith('http') ? '_blank' : undefined} rel="noreferrer"
                   className="w-8 h-8 rounded-lg bg-carbon-800 border border-carbon-700 flex items-center justify-center text-carbon-500 hover:text-echo-400 hover:border-echo-500/40 transition-all duration-200">
                   <Icon className="w-3.5 h-3.5" />

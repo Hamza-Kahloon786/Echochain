@@ -33,7 +33,7 @@ export default function AdminLayout() {
             <Leaf className="w-4 h-4 text-white" />
           </div>
           <div>
-            <div className="text-sm font-bold text-white leading-tight">ChainscopeAI</div>
+            <div className="text-sm font-bold text-white leading-tight">Echochain</div>
             <div className="flex items-center gap-1">
               <Shield className="w-2.5 h-2.5 text-echo-400" />
               <span className="text-[10px] font-semibold text-echo-400 uppercase tracking-widest">Admin</span>
